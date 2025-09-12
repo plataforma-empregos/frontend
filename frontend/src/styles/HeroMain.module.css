@@ -1,0 +1,67 @@
+.hero {
+  padding: 100px 0;
+  text-align: left;
+  background: #f9faff;
+  width: 100%;
+}
+
+.content {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;
+  width: 100%;
+}
+
+.title {
+  font-family: "Poppins", sans-serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: #25324b;
+  line-height: 1.2;
+}
+
+.titleSpan {
+  font-family: "Poppins", sans-serif;
+  color: #578fca;
+}
+
+.description {
+  margin: 20px 0 40px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  color: #555;
+  max-width: 600px;
+}
+
+.popular {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  color: #888;
+  margin-top: 12px;
+}
+
+.popular span {
+  font-weight: 500;
+  color: #333;
+}
+
+/*Media Queries */
+
+@media (max-width: 768px) {
+  .hero {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .content {
+    padding: 0 1.5rem;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+}
