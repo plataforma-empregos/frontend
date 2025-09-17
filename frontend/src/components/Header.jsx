@@ -30,7 +30,7 @@ export default function Header() {
               <Link to="/login">Login</Link>
             </li>
             <li>
-              <Link to="/signup" className={styles.signupButton}>
+              <Link to="/register" className={styles.signupButton}>
                 Cadastrar-se
               </Link>
             </li>
@@ -61,7 +61,7 @@ export default function Header() {
               </li>
               <li>
                 <Link
-                  to="/signup"
+                  to="/register"
                   className={styles.signupButtonMobile}
                   onClick={toggleMenu}
                 >

@@ -6,26 +6,24 @@ import HomePage from "./pages/HomePage";
 import JobCard from "./components/JobCard";
 import Companies from "./pages/Companies";
 
-import LoginPage from "./pages/LoginPage";
+import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
-import SignUpPage from "./pages/SignUpPage";
+import Register from "./pages/Register";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Rotas com o Header/Footer */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/vacancies" element={<JobCard />} />
           <Route path="/companies" element={<Companies />} />
         </Route>
 
-        {/* Rotas Sem o Header/Footer */}
         <Route element={<AuthLayout />}>
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/register" element={<Register />} />
         </Route>
       </Routes>
     </BrowserRouter>
