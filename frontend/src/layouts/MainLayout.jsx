@@ -7,7 +7,7 @@ function MainLayout() {
     <>
       <Header />
       <main>
-        <Outlet /> {/* Inserir as páginas com Header/Footer */}
+        <Outlet />
       </main>
       <Footer />
     </>

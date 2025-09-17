@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Register() {
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
-	const [phone, setPhone] = useState("");
-	const [terms, setTerms] = useState(false);
-
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [terms, setTerms] = useState(false);
+  const navigate = useNavigate();
   const phoneRegex = /^\(\d{2}\)\s9\d{4}-\d{4}$/;
 
   const formatPhone = (value) => {
@@ -19,37 +21,45 @@ function Register() {
     } else if (onlyNumbers.length <= 7) {
       return `(${onlyNumbers.slice(0, 2)}) ${onlyNumbers.slice(2)}`;
     } else if (onlyNumbers.length <= 11) {
-      return `(${onlyNumbers.slice(0, 2)}) ${onlyNumbers.slice(2, 7)}-${onlyNumbers.slice(7)}`;
+      return `(${onlyNumbers.slice(0, 2)}) ${onlyNumbers.slice(
+        2,
+        7
+      )}-${onlyNumbers.slice(7)}`;
     } else {
-      return `(${onlyNumbers.slice(0, 2)}) ${onlyNumbers.slice(2, 7)}-${onlyNumbers.slice(7, 11)}`;
+      return `(${onlyNumbers.slice(0, 2)}) ${onlyNumbers.slice(
+        2,
+        7
+      )}-${onlyNumbers.slice(7, 11)}`;
     }
   };
 
-  // Função de validação simples
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!name || !email || !password || !confirmPassword || !phone) {
-      alert("Por favor, preencha todos os campos.");
+      toast.error("Por favor, Preencha todos os campos !");
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("As senhas não coincidem.");
+      toast.error("As senhas não coincidem.");
       return;
     }
 
     if (!phoneRegex.test(phone)) {
-      alert("Número de telefone inválido. Use o formato (XX) 9XXXX-XXXX.");
+      toast.error(
+        "Número de telefone inválido. Use o formato (XX) 9XXXX-XXXX."
+      );
       return;
     }
 
     if (!terms) {
-      alert("Você deve concordar com os termos de uso.");
+      toast.error("Você deve concordar com os termos de uso.");
       return;
     }
 
-    alert("Conta criada com sucesso!");
+    toast.success("Conta criada com sucesso!");
+    navigate("/");
   };
 
   return (
@@ -77,7 +87,9 @@ function Register() {
           </div>
 
           <div>
-            <label className="block text-gray-700 text-left">E-mail Address</label>
+            <label className="block text-gray-700 text-left">
+              E-mail Address
+            </label>
             <input
               type="email"
               value={email}
@@ -101,7 +113,9 @@ function Register() {
           </div>
 
           <div>
-            <label className="block text-gray-700 text-left">Confirm Password</label>
+            <label className="block text-gray-700 text-left">
+              Confirm Password
+            </label>
             <input
               type="password"
               value={confirmPassword}
@@ -120,7 +134,7 @@ function Register() {
               onChange={(e) => setPhone(formatPhone(e.target.value))}
               className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700"
               placeholder="(11) 91234-5678"
-              maxLength="15" 
+              maxLength="15"
               required
             />
           </div>
@@ -166,9 +180,9 @@ function Register() {
 
         <p className="text-center text-sm text-gray-600 mt-4">
           Already have an account?{" "}
-          <a href="/" className="text-sky-700 underline">
+          <Link to="/login" className="text-sky-700 underline">
             Sign in here
-          </a>
+          </Link>
         </p>
       </div>
     </div>
