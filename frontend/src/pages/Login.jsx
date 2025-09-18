@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import Logo from "../components/Logo";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -27,10 +28,10 @@ function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
-        <h1 className="text-4xl font-bold text-center text-sky-700 mb-4">
-          TrampoMATCH
-        </h1>
+      <div className="bg-white p-8 rounded-2xl shadow-lg w-96 text-center">
+        <div className="mb-6">
+          <Logo />
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-gray-700 text-left">

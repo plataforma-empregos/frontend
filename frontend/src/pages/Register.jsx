@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Logo from "../components/Logo";
 import toast from "react-hot-toast";
 
 function Register() {
@@ -63,11 +64,11 @@ function Register() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
-        <h1 className="text-4xl font-bold text-center text-sky-700 mb-4">
-          TrampoMATCH
-        </h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-2xl shadow-lg w-96 text-center">
+        <div className="mb-6">
+          <Logo />
+        </div>
 
         <h2 className="text-xl font-semibold text-center mb-4">
           Create an account
