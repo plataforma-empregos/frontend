@@ -1,0 +1,93 @@
+import Logo from "./Logo";
+import styles from "../styles/Footer.module.css";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaTwitter,
+} from "react-icons/fa";
+
+export default function Footer() {
+  return (
+    <footer className={styles.footer}>
+      <div className={styles.container}>
+        <div className={styles.footerContent}>
+          <div className={`${styles.footerColumn} ${styles.logoColumn}`}>
+            <Logo />
+            <p className={styles.footerDescription}>
+              Ótima plataforma para o candidato a emprego apaixonado por
+              startups. Encontre o emprego dos seus sonhos mais fácil.
+            </p>
+          </div>
+
+          <div className={styles.linksWrapper}>
+            <div className={styles.footerColumn}>
+              <h4 className={styles.titleColumnStandard}>Sobre</h4>
+              <a href="#">Empresas</a>
+              <a href="#">Preços</a>
+              <a href="#">Termos</a>
+              <a href="#">Conselhos</a>
+              <a href="#">Política de Privacidade</a>
+            </div>
+
+            <div className={styles.footerColumn}>
+              <h4 className={styles.titleColumnStandard}>Recursos</h4>
+              <a href="#">Documentos de Ajuda</a>
+              <a href="#">Guia</a>
+              <a href="#">Atualizações</a>
+              <a href="#">Contate-nos</a>
+            </div>
+          </div>
+
+          <div className={`${styles.footerColumn} ${styles.newsletterColumn}`}>
+            <h4 className={styles.titleColumnStandard}>
+              Receba notificações de emprego
+            </h4>
+            <p>
+              As últimas notícias sobre empregos, artigos enviados para sua
+              caixa de entrada semanalmente.
+            </p>
+            <div className={styles.subscribeForm}>
+              <input type="email" placeholder="Endereço de Email" />
+              <button>Inscrever-se</button>
+            </div>
+          </div>
+        </div>
+
+        <div className={styles.footerBottom}>
+          <p>2025 @ TrampoMatch. Todos os direitos reservados.</p>
+          <div className={styles.socialIcons}>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaFacebookF />
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaInstagram />
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaLinkedinIn />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <FaTwitter />
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

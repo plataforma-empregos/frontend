@@ -1,4 +1,4 @@
-# Logs
+# Ficheiros de log gerados por diferentes ferramentas
 logs
 *.log
 npm-debug.log*
@@ -7,16 +7,38 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Diretório de dependências. O mais importante!
 node_modules
+
+# Arquivos de build do Vite. O código compilado não deve ir para o repo.
 dist
 dist-ssr
-*.local
 
-# Editor directories and files
+# Cache de dependências do Vite
+.vite
+
+# Arquivos de ambiente locais. ESSENCIAL PARA SEGURANÇA!
+# Contêm chaves de API e outras informações sensíveis.
+.env.local
+.env.*.local
+.env
+
+# Relatórios de cobertura de testes
+coverage
+.nyc_output
+
+# Arquivos de sistema operacional
+.DS_Store
+Thumbs.db/
+
+#Tests Jest
+jest/
+
+
+# Diretórios e arquivos de configuração de editores de código
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
