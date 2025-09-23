@@ -9,6 +9,7 @@ import VacanciesPage from "./components/JobCard";
 import LoginPage from "./pages/Login";
 import ForgotPasswordPage from "./pages/ForgotPassword";
 import RegisterPage from "./pages/Register";
+import ProfilePage from "./pages/Profile";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/vacancies" element={<VacanciesPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
         <Route element={<AuthLayout />}>
