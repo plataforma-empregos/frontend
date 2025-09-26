@@ -76,7 +76,7 @@ function Register() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700">Name</label>
+            <label className="block text-gray-700 text-left">Name</label>
             <input
               type="text"
               value={name}
@@ -128,7 +128,7 @@ function Register() {
           </div>
 
           <div>
-            <label className="block text-gray-700">Phone / WhatsApp</label>
+            <label className="block text-gray-700 text-left">Phone / WhatsApp</label>
             <input
               type="tel"
               value={phone}

@@ -47,7 +47,7 @@ function ForgotPassword() {
           </button>
         </form>
         <Link
-          to="/"
+          to="/login"
           className="block mx-auto mt-6 text-gray-500 font-semibold hover:underline text-center"
         >
           Back to login
