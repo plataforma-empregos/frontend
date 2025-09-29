@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import toast from "react-hot-toast";
+import { useAuth } from "../context/AuthContext";
 
 function Register() {
   const [name, setName] = useState("");
@@ -11,12 +11,14 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [terms, setTerms] = useState(false);
+
+  const { login } = useAuth();
   const navigate = useNavigate();
+
   const phoneRegex = /^\(\d{2}\)\s9\d{4}-\d{4}$/;
 
   const formatPhone = (value) => {
     const onlyNumbers = value.replace(/\D/g, "");
-
     if (onlyNumbers.length <= 2) {
       return `(${onlyNumbers}`;
     } else if (onlyNumbers.length <= 7) {
@@ -38,7 +40,7 @@ function Register() {
     e.preventDefault();
 
     if (!name || !email || !password || !confirmPassword || !phone) {
-      toast.error("Por favor, Preencha todos os campos !");
+      toast.error("Por favor, preencha todos os campos!");
       return;
     }
 
@@ -48,9 +50,7 @@ function Register() {
     }
 
     if (!phoneRegex.test(phone)) {
-      toast.error(
-        "Número de telefone inválido. Use o formato (XX) 9XXXX-XXXX."
-      );
+      toast.error("Número de telefone inválido. Use o formato (XX) 9XXXX-XXXX.");
       return;
     }
 
@@ -59,8 +59,23 @@ function Register() {
       return;
     }
 
+    // cria um objeto padronizado para salvar
+    const newUser = {
+      name,
+      email: email.toLowerCase(),
+      phone,
+      password,
+      tecnologias: [],
+    };
+
+    // salva direto no localStorage primeiro
+    localStorage.setItem("user", JSON.stringify(newUser));
+
+    // autentica no contexto (pega exatamente o que foi salvo)
+    login(newUser);
+
     toast.success("Conta criada com sucesso!");
-    navigate("/");
+    navigate("/profile");
   };
 
   return (
@@ -76,7 +91,7 @@ function Register() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700">Name</label>
+            <label className="block text-gray-700 text-left">Name</label>
             <input
               type="text"
               value={name}
@@ -88,9 +103,7 @@ function Register() {
           </div>
 
           <div>
-            <label className="block text-gray-700 text-left">
-              E-mail Address
-            </label>
+            <label className="block text-gray-700 text-left">E-mail Address</label>
             <input
               type="email"
               value={email}
@@ -114,9 +127,7 @@ function Register() {
           </div>
 
           <div>
-            <label className="block text-gray-700 text-left">
-              Confirm Password
-            </label>
+            <label className="block text-gray-700 text-left">Confirm Password</label>
             <input
               type="password"
               value={confirmPassword}
@@ -128,7 +139,7 @@ function Register() {
           </div>
 
           <div>
-            <label className="block text-gray-700">Phone / WhatsApp</label>
+            <label className="block text-gray-700 text-left">Phone / WhatsApp</label>
             <input
               type="tel"
               value={phone}

@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { locationsData } from "../data/locationsData";
+import { useAuth } from "../context/AuthContext";
 
 export default function Profile() {
+  const { user } = useAuth();
+
   const [formData, setFormData] = useState({
     nome: "",             // Nome do usuário
     email: "",            // Email do usuário
@@ -29,10 +32,27 @@ export default function Profile() {
   ];
 
   // Hook que carrega dados do localStorage quando a página é aberta
-  useEffect(() => {
-    const savedData = localStorage.getItem("userProfile"); 
-    if (savedData) setFormData(JSON.parse(savedData));     
-  }, []);
+useEffect(() => {
+  const savedData = localStorage.getItem("userProfile");
+  if (savedData) {
+    const parsedData = JSON.parse(savedData);
+
+    // Garante valores padrão se não existirem
+    setFormData((prev) => ({
+      ...prev,
+      ...parsedData,
+      tecnologias: parsedData.tecnologias || [],
+    }));
+  } else if (user) {
+    setFormData((prev) => ({
+      ...prev,
+      nome: user.nome || "",
+      email: user.email || "",
+      phone: user.phone || "",
+      tecnologias: [],
+    }));
+  }
+}, [user]);
 
   // Função para atualizar o formulário conforme o usuário digita ou marca os checkbox
   const handleChange = (e) => {
@@ -77,10 +97,13 @@ export default function Profile() {
 
   // Função de localStorage quando o usuário clica em "Salvar"
   const handleSubmit = (e) => {
-    e.preventDefault(); 
-    localStorage.setItem("userProfile", JSON.stringify(formData)); 
-    alert("Perfil salvo com sucesso!"); 
+    e.preventDefault();
+    const updatedData = { ...formData, email: user?.email || formData.email };
+    setFormData(updatedData);
+    localStorage.setItem("userProfile", JSON.stringify(updatedData));
+    alert("Perfil salvo com sucesso!");
   };
+
 
   return (
     <div className="min-h-screen bg-gray-50 font-sans p-4 md:p-8">

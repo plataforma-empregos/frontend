@@ -2,28 +2,52 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import Logo from "../components/Logo";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [terms, setTerms] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [redirect, setRedirect] = useState(false);
+
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!email || !password) {
       toast.error("Por favor, preencha todos os campos.");
       return;
     }
+
     if (!terms) {
       toast.error("Você deve concordar com os termos de uso.");
       return;
     }
 
-    toast.success("Login realizado com sucesso!");
-    navigate("/");
+    // recupera o usuário salvo no Register
+    const savedUser = JSON.parse(localStorage.getItem("user"));
+
+    console.log("DEBUG user no localStorage:", savedUser);
+
+
+    if (!savedUser) {
+      toast.error("Nenhum usuário encontrado. Crie uma conta primeiro.");
+      return;
+    }
+
+    // validação: email normalizado + senha exata
+    if (
+      savedUser.email.toLowerCase() === email.toLowerCase() &&
+      savedUser.password === password
+    ) {
+      login(savedUser); // autentica no contexto
+      toast.success("Login realizado com sucesso!");
+      navigate("/profile");
+    } else {
+      toast.error("E-mail ou senha incorretos.");
+    }
   };
 
   return (
@@ -84,7 +108,7 @@ function Login() {
                     width="22"
                     height="22"
                   >
-                    <path d="M1.5 12C3.135 7.364 7.305 4.5 12 4.5s8.865 2.864 10.5 7.5c-1.635 4.636-5.805 7.5-10.5 7.5S3.135 16.636 1.5 12z" />
+                    <path d="M1.5 12C3.135 7.364 7.305 4.5 12 4.5s8.865-2.864 10.5 7.5c-1.635 4.636-5.805 7.5-10.5 7.5S3.135 16.636 1.5 12z" />
                     <circle cx="12" cy="12" r="3.5" />
                   </svg>
                 )}
