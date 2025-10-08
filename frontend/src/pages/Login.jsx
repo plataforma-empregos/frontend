@@ -31,7 +31,6 @@ function Login() {
 
     console.log("DEBUG user no localStorage:", savedUser);
 
-
     if (!savedUser) {
       toast.error("Nenhum usuário encontrado. Crie uma conta primeiro.");
       return;

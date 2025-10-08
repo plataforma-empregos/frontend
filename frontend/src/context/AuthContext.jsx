@@ -12,24 +12,29 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
-  // carregar usuário do localStorage
+  // carregar usuário do localStorage apenas se a sessão estiver ativa
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
-    if (savedUser) {
+    const sessionActive = sessionStorage.getItem("sessionActive");
+
+    if (savedUser && sessionActive) {
       setUser(JSON.parse(savedUser));
+    } else {
+      setUser(null);
     }
   }, []);
 
-  // login fake (pode trocar depois por API)
+  // login (simula autenticação e cria sessão)
   const login = (userData) => {
     setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData));
+    localStorage.setItem("user", JSON.stringify(userData)); // mantém os dados salvos
+    sessionStorage.setItem("sessionActive", "true"); // marca a sessão como ativa
   };
 
-  // logout
+  // logout (encerra sessão mas mantém dados do cadastro)
   const logout = () => {
     setUser(null);
-    // localStorage.removeItem("user");
+    sessionStorage.removeItem("sessionActive"); // encerra a sessão
   };
 
   return (

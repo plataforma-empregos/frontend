@@ -10,7 +10,8 @@ import LoginPage from "./pages/Login";
 import ForgotPasswordPage from "./pages/ForgotPassword";
 import RegisterPage from "./pages/Register";
 import ProfilePage from "./pages/Profile";
-import PrivateRoute from "./routes/PrivateRoute"; // 👈 novo
+import PrivateRoute from "./routes/PrivateRoute";
+import TermsOfUse from "./pages/TermsOfUse";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/vacancies" element={<VacanciesPage />} />
+          <Route path="/termsofuse" element={<TermsOfUse />} />
 
           {/* Rota protegida */}
           <Route
