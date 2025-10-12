@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import toast from "react-hot-toast";
+import { useAuth } from "../context/AuthContext";
+import Termsofuse from "../pages/TermsOfUse"; // importa o conteúdo dos termos
 
 function Register() {
   const [name, setName] = useState("");
@@ -11,12 +12,16 @@ function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [terms, setTerms] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
+  const [hasScrolled, setHasScrolled] = useState(false);
+
+  const { login } = useAuth();
   const navigate = useNavigate();
+
   const phoneRegex = /^\(\d{2}\)\s9\d{4}-\d{4}$/;
 
   const formatPhone = (value) => {
     const onlyNumbers = value.replace(/\D/g, "");
-
     if (onlyNumbers.length <= 2) {
       return `(${onlyNumbers}`;
     } else if (onlyNumbers.length <= 7) {
@@ -38,7 +43,7 @@ function Register() {
     e.preventDefault();
 
     if (!name || !email || !password || !confirmPassword || !phone) {
-      toast.error("Por favor, Preencha todos os campos !");
+      toast.error("Por favor, preencha todos os campos!");
       return;
     }
 
@@ -48,9 +53,7 @@ function Register() {
     }
 
     if (!phoneRegex.test(phone)) {
-      toast.error(
-        "Número de telefone inválido. Use o formato (XX) 9XXXX-XXXX."
-      );
+      toast.error("Número de telefone inválido. Use o formato (XX) 9XXXX-XXXX.");
       return;
     }
 
@@ -59,12 +62,72 @@ function Register() {
       return;
     }
 
+    const newUser = {
+      nome: name,
+      email: email.toLowerCase(),
+      phone,
+      password,
+      tecnologias: [],
+    };
+
+    localStorage.setItem("user", JSON.stringify(newUser));
+    login(newUser);
+
     toast.success("Conta criada com sucesso!");
-    navigate("/");
+    navigate("/profile");
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 relative">
+      {/* Modal de Termos de Uso */}
+      {showTerms && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-2xl shadow-xl w-11/12 md:w-2/3 lg:w-1/2 relative">
+            <h2 className="text-2xl font-semibold mb-4 text-center text-gray-800">
+              Terms of Service
+            </h2>
+
+            {/* Área rolável */}
+            <div
+              className="max-h-96 overflow-y-auto p-4 border rounded-lg text-gray-700 leading-relaxed text-sm"
+              onScroll={(e) => {
+                const target = e.target;
+                const scrolledToBottom =
+                  target.scrollHeight - target.scrollTop <= target.clientHeight + 10;
+                if (scrolledToBottom) setHasScrolled(true);
+              }}
+            >
+              <Termsofuse />
+            </div>
+
+            <div className="flex justify-between items-center mt-6">
+              <button
+                onClick={() => setShowTerms(false)}
+                className="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition"
+              >
+                Fechar
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowTerms(false);
+                  setTerms(true);
+                }}
+                className={`px-4 py-2 rounded-lg text-white transition ${
+                  hasScrolled
+                    ? "bg-teal-600 hover:bg-sky-700"
+                    : "bg-gray-400 cursor-not-allowed"
+                }`}
+                disabled={!hasScrolled}
+              >
+                Aceito os Termos
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Formulário principal */}
       <div className="bg-white p-8 rounded-2xl shadow-lg w-96 text-center">
         <div className="mb-6">
           <Logo />
@@ -88,9 +151,7 @@ function Register() {
           </div>
 
           <div>
-            <label className="block text-gray-700 text-left">
-              E-mail Address
-            </label>
+            <label className="block text-gray-700 text-left">E-mail Address</label>
             <input
               type="email"
               value={email}
@@ -114,9 +175,7 @@ function Register() {
           </div>
 
           <div>
-            <label className="block text-gray-700 text-left">
-              Confirm Password
-            </label>
+            <label className="block text-gray-700 text-left">Confirm Password</label>
             <input
               type="password"
               value={confirmPassword}
@@ -150,7 +209,14 @@ function Register() {
             />
             <span className="text-gray-600 text-sm">
               By continuing, you agree to our{" "}
-              <a href="#" className="text-sky-700 underline">
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setShowTerms(true);
+                }}
+                className="text-sky-700 underline hover:text-sky-900"
+              >
                 terms of service
               </a>
             </span>
@@ -164,6 +230,7 @@ function Register() {
           </button>
         </form>
 
+        {/* Seção restaurada abaixo */}
         <div className="flex items-center my-4">
           <hr className="flex-grow border-gray-300" />
           <span className="px-2 text-gray-500 text-sm">or sign up with</span>
