@@ -6,6 +6,8 @@ import {
   FaLinkedinIn,
   FaTwitter,
 } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
 
 export default function Footer() {
   return (
@@ -25,9 +27,11 @@ export default function Footer() {
               <h4 className={styles.titleColumnStandard}>Sobre</h4>
               <a href="#">Empresas</a>
               <a href="#">Preços</a>
-              <a href="#">Termos</a>
+              <Link to="/terms" onClick={() => window.scrollTo(0,0)}>
+              Termos de Uso
+              </Link>
               <a href="#">Conselhos</a>
-              <a href="#">Política de Privacidade</a>
+              <Link to="/privacy-policy">Política de Privacidade</Link>
             </div>
 
             <div className={styles.footerColumn}>
@@ -35,7 +39,9 @@ export default function Footer() {
               <a href="#">Documentos de Ajuda</a>
               <a href="#">Guia</a>
               <a href="#">Atualizações</a>
-              <a href="#">Contate-nos</a>
+              <Link to="/contact" onClick={() => window.scrollTo(0, 0)}>
+              Contate-nos
+              </Link>
             </div>
           </div>
 
