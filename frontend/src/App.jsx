@@ -12,10 +12,20 @@ import RegisterPage from "./pages/Register";
 import ProfilePage from "./pages/Profile";
 import PrivateRoute from "./routes/PrivateRoute";
 import TermsOfUse from "./pages/TermsOfUse";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ScrollToTop from "./components/ScrollToTop";
+import Terms from "./pages/Terms";
+import Advice from "./pages/Advice";
+import HelpDocs from "./pages/HelpDocs";
+import Guide from "./pages/Guide";
+import Updates from "./pages/Updates";
+import Contact from "./pages/Contact";
+
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Toaster position="top-right" />
       <Routes>
         <Route element={<MainLayout />}>
@@ -23,6 +33,13 @@ function App() {
           <Route path="/companies" element={<CompaniesPage />} />
           <Route path="/vacancies" element={<VacanciesPage />} />
           <Route path="/termsofuse" element={<TermsOfUse />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} /> 
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/advice" element={<Advice />} />
+          <Route path="/help-docs" element={<HelpDocs />} />
+          <Route path="/guide" element={<Guide />} />
+          <Route path="/updates" element={<Updates />} />
+          <Route path="/contact" element={<Contact />} />
 
           {/* Rota protegida */}
           <Route

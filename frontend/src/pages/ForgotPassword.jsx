@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Logo from "../components/Logo";
 
 function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -12,9 +13,10 @@ function ForgotPassword() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-96">
-        <h1 className="text-4xl font-bold text-center text-sky-700 mb-4">
-          TrampoMATCH
-        </h1>
+        <div className="flex justify-center mb-4">
+          <Logo />
+        </div>
+
         <h2 className="text-2xl font-bold text-center mb-2">
           Forgot Password?
         </h2>
@@ -41,7 +43,7 @@ function ForgotPassword() {
           </div>
           <button
             type="submit"
-            className="w-full bg-[#2CA19B] text-white p-2 rounded-lg font-semibold hover:bg-[#23867f] transition"
+            className="w-full bg-[#0069a8] text-white p-2 rounded-lg font-semibold hover:bg-[#004875] transition"
           >
             Password Reset
           </button>
