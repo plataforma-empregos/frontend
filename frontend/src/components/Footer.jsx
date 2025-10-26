@@ -30,15 +30,15 @@ export default function Footer() {
               <Link to="/terms" onClick={() => window.scrollTo(0,0)}>
               Termos de Uso
               </Link>
-              <a href="#">Conselhos</a>
+              <Link to="/advice">Conselhos</Link>
               <Link to="/privacy-policy">Política de Privacidade</Link>
             </div>
 
             <div className={styles.footerColumn}>
               <h4 className={styles.titleColumnStandard}>Recursos</h4>
-              <a href="#">Documentos de Ajuda</a>
-              <a href="#">Guia</a>
-              <a href="#">Atualizações</a>
+              <Link to="/help-docs" onClick={() => window.scrollTo(0, 0)}>Documentos de Ajuda</Link>
+              <Link to="/guide" onClick={() => window.scrollTo(0, 0)}>Guia</Link>
+              <Link to="/updates" onClick={() => window.scrollTo(0, 0)}>Atualizações</Link>
               <Link to="/contact" onClick={() => window.scrollTo(0, 0)}>
               Contate-nos
               </Link>
