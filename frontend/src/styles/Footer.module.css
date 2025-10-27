@@ -1,6 +1,6 @@
 .footer {
-  background-color: #202430;
-  color: #a0a8b9;
+  background-color: var(--clr-footer-bg);
+  color: var(--clr-footer-text);
   padding: 80px 0 20px 0;
   font-family: "Roboto", sans-serif;
 }
@@ -35,29 +35,30 @@
 
 .linksWrapper {
   display: flex;
-  gap: 10rem;
+  gap: 10rem; /* Manteve o espaçamento original */
 }
 
 .footerDescription {
-  color: #d6d3eb;
+  color: var(--clr-footer-text); /* Cor de texto padrão do footer */
   line-height: 1.6;
 }
 
 .titleColumnStandard {
-  color: #ffffff;
+  /* Cor primária de texto do tema (se adapta ao light/dark) */
+  color: var(--clr-text-primary);
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 8px;
 }
 
 .footerColumn a {
-  color: #a0a8b9;
+  color: var(--clr-footer-text); /* Cor de texto padrão do footer */
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footerColumn a:hover {
-  color: #ffffff;
+  color: var(--clr-footer-link-hover); /* Cor de hover específica do footer */
 }
 
 .subscribeForm {
@@ -68,17 +69,20 @@
 .subscribeForm input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #3e4d6c;
+  border: 1px solid var(--clr-footer-border); /* Borda específica do footer */
   border-radius: 6px 0 0 6px;
-  background-color: #ffffff;
+  background-color: var(--clr-bg-primary); /* Fundo primário do tema */
+  color: var(--clr-text-primary); /* Texto primário do tema */
   outline: none;
 }
 
 .subscribeForm button {
   padding: 10px 20px;
   border: none;
-  background-color: #578fca;
-  color: #ffffff;
+  background-color: var(
+    --clr-accent-primary
+  ); /* Cor de destaque primária do tema */
+  color: var(--clr-text-inverse); /* Cor de texto que contrasta com o accent */
   border-radius: 0 6px 6px 0;
   cursor: pointer;
   white-space: nowrap;
@@ -86,7 +90,7 @@
 }
 
 .subscribeForm button:hover {
-  background-color: #0056b3;
+  background-color: var(--clr-accent-tertiary); /* Cor de destaque hover */
 }
 
 .footerBottom {
@@ -94,8 +98,10 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 20px;
-  border-top: 1px solid #3e4d6c;
+  border-top: 1px solid var(--clr-footer-border); /* Borda específica do footer */
   font-size: 14px;
+  /* Cor de texto padrão do footer para o texto do copyright */
+  color: var(--clr-footer-text);
 }
 
 .socialIcons {
@@ -104,17 +110,17 @@
 }
 
 .socialIcons a {
-  color: #a0a8b9;
+  color: var(--clr-footer-text); /* Cor de texto padrão do footer */
   font-size: 20px;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .socialIcons a:hover {
-  color: #ffffff;
+  color: var(--clr-footer-link-hover); /* Cor de hover específica do footer */
 }
 
-/*Media Queries*/
+/* Media Queries (sem alterações de cor aqui) */
 @media (max-width: 768px) {
   .footerContent {
     flex-direction: column;
@@ -122,12 +128,10 @@
     text-align: center;
     gap: 40px;
   }
-
   .logoColumn {
     align-items: center;
     text-align: center;
   }
-
   .linksWrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -135,28 +139,23 @@
     width: 100%;
     text-align: center;
   }
-
   .newsletterColumn {
     text-align: center;
   }
-
   .subscribeForm {
     flex-direction: column;
     align-items: center;
   }
-
   .subscribeForm input,
   .subscribeForm button {
     width: 100%;
     max-width: 350px;
     border-radius: 6px;
   }
-
   .subscribeForm input {
     margin-bottom: 10px;
     text-align: center;
   }
-
   .footerBottom {
     flex-direction: column;
     gap: 20px;

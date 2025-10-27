@@ -1,7 +1,7 @@
 .hero {
   padding: 100px 0;
   text-align: left;
-  background: #f9faff;
+  background: var(--clr-bg-secondary);
   width: 100%;
 }
 
@@ -16,52 +16,100 @@
   font-family: "Poppins", sans-serif;
   font-size: 4rem;
   font-weight: 700;
-  color: #25324b;
+  color: var(--clr-text-primary);
   line-height: 1.2;
 }
 
 .titleSpan {
   font-family: "Poppins", sans-serif;
-  color: #578fca;
+  color: var(--clr-accent-primary);
 }
 
 .description {
   margin: 20px 0 40px;
   font-family: "Roboto", sans-serif;
   font-size: 16px;
-  color: #555;
+  color: var(--clr-text-secondary);
   max-width: 600px;
 }
 
 .popular {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
-  color: #888;
+  color: var(--clr-text-muted);
   margin-top: 12px;
 }
 
 .popular span {
   font-weight: 500;
-  color: #333;
+  color: var(--clr-text-primary);
 }
 
-/*Media Queries */
+.searchBarWrapper {
+  position: relative;
+  width: fit-content;
+  margin: 20px 0;
+}
 
+.loginPromptOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(230, 230, 230, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10;
+  text-align: center;
+  font-weight: 500;
+  color: var(--clr-text-primary);
+  padding: 1rem;
+  transition: background-color 0.2s ease, backdrop-filter 0.2s ease;
+}
+
+.loginPromptOverlay:hover {
+  background-color: rgba(200, 200, 200, 0.8);
+}
+
+html[data-theme="dark"] .loginPromptOverlay {
+  background-color: rgba(45, 55, 72, 0.7);
+  color: var(--clr-text-primary);
+}
+
+html[data-theme="dark"] .loginPromptOverlay:hover {
+  background-color: rgba(26, 32, 44, 0.8);
+}
+
+.searchBarWrapper > *:not(.loginPromptOverlay) {
+  filter: blur(0px);
+  transition: filter 0.3s ease;
+}
+.searchBarWrapper:has(.loginPromptOverlay) > *:not(.loginPromptOverlay) {
+  filter: blur(4px);
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Media Queries*/
 @media (max-width: 768px) {
   .hero {
     padding-top: 60px;
     padding-bottom: 60px;
   }
-
   .content {
     padding: 0 1.5rem;
   }
-
   .title {
+    text-align: center;
     font-size: 2.5rem;
   }
-
   .description {
+    text-align: center;
     font-size: 1rem;
   }
 }
