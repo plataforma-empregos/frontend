@@ -3,10 +3,8 @@ import useBreadcrumbs from "use-react-router-breadcrumbs";
 import { routes } from "../App.jsx";
 
 export default function Breadcrumbs() {
-  // Chama o hook passando as definições de rota
   const breadcrumbs = useBreadcrumbs(routes);
 
-  // Não renderiza nada se estiver na Home ou se houver apenas 1 breadcrumb (a própria Home)
   if (breadcrumbs.length <= 1) {
     return null;
   }

@@ -1,4 +1,5 @@
 import Logo from "./Logo";
+import { Link } from "react-router-dom";
 import styles from "../styles/Footer.module.css";
 import {
   FaFacebookF,
@@ -28,6 +29,11 @@ export default function Footer() {
               <a href="#">Termos</a>
               <a href="#">Conselhos</a>
               <a href="#">Política de Privacidade</a>
+              <Link to="/terms" onClick={() => window.scrollTo(0, 0)}>
+                Termos de Uso
+              </Link>
+              <Link to="/advice">Conselhos</Link>
+              <Link to="/privacy-policy">Política de Privacidade</Link>
             </div>
 
             <div className={styles.footerColumn}>
@@ -36,6 +42,18 @@ export default function Footer() {
               <a href="#">Guia</a>
               <a href="#">Atualizações</a>
               <a href="#">Contate-nos</a>
+              <Link to="/help-docs" onClick={() => window.scrollTo(0, 0)}>
+                Documentos de Ajuda
+              </Link>
+              <Link to="/guide" onClick={() => window.scrollTo(0, 0)}>
+                Guia
+              </Link>
+              <Link to="/updates" onClick={() => window.scrollTo(0, 0)}>
+                Atualizações
+              </Link>
+              <Link to="/contact" onClick={() => window.scrollTo(0, 0)}>
+                Contate-nos
+              </Link>
             </div>
           </div>
 

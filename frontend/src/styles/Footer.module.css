@@ -35,16 +35,15 @@
 
 .linksWrapper {
   display: flex;
-  gap: 10rem; /* Manteve o espaçamento original */
+  gap: 10rem;
 }
 
 .footerDescription {
-  color: var(--clr-footer-text); /* Cor de texto padrão do footer */
+  color: var(--clr-footer-text);
   line-height: 1.6;
 }
 
 .titleColumnStandard {
-  /* Cor primária de texto do tema (se adapta ao light/dark) */
   color: var(--clr-text-primary);
   font-size: 16px;
   font-weight: 600;
@@ -52,13 +51,13 @@
 }
 
 .footerColumn a {
-  color: var(--clr-footer-text); /* Cor de texto padrão do footer */
+  color: var(--clr-footer-text);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footerColumn a:hover {
-  color: var(--clr-footer-link-hover); /* Cor de hover específica do footer */
+  color: var(--clr-footer-link-hover);
 }
 
 .subscribeForm {
@@ -69,20 +68,18 @@
 .subscribeForm input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid var(--clr-footer-border); /* Borda específica do footer */
+  border: 1px solid var(--clr-footer-border);
   border-radius: 6px 0 0 6px;
-  background-color: var(--clr-bg-primary); /* Fundo primário do tema */
-  color: var(--clr-text-primary); /* Texto primário do tema */
+  background-color: var(--clr-bg-primary);
+  color: var(--clr-text-primary);
   outline: none;
 }
 
 .subscribeForm button {
   padding: 10px 20px;
   border: none;
-  background-color: var(
-    --clr-accent-primary
-  ); /* Cor de destaque primária do tema */
-  color: var(--clr-text-inverse); /* Cor de texto que contrasta com o accent */
+  background-color: var(--clr-accent-primary);
+  color: var(--clr-text-inverse);
   border-radius: 0 6px 6px 0;
   cursor: pointer;
   white-space: nowrap;
@@ -90,7 +87,7 @@
 }
 
 .subscribeForm button:hover {
-  background-color: var(--clr-accent-tertiary); /* Cor de destaque hover */
+  background-color: var(--clr-accent-tertiary);
 }
 
 .footerBottom {
@@ -98,9 +95,8 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 20px;
-  border-top: 1px solid var(--clr-footer-border); /* Borda específica do footer */
+  border-top: 1px solid var(--clr-footer-border);
   font-size: 14px;
-  /* Cor de texto padrão do footer para o texto do copyright */
   color: var(--clr-footer-text);
 }
 
@@ -110,17 +106,17 @@
 }
 
 .socialIcons a {
-  color: var(--clr-footer-text); /* Cor de texto padrão do footer */
+  color: var(--clr-footer-text);
   font-size: 20px;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .socialIcons a:hover {
-  color: var(--clr-footer-link-hover); /* Cor de hover específica do footer */
+  color: var(--clr-footer-link-hover);
 }
 
-/* Media Queries (sem alterações de cor aqui) */
+/* Media Queries */
 @media (max-width: 768px) {
   .footerContent {
     flex-direction: column;

@@ -58,28 +58,21 @@ export default function Header() {
               </>
             )}
 
-            {/* Botão de Tema (Sempre Visível no Desktop) */}
             <li>
               <ThemeToggleButton />
             </li>
           </ul>
         </nav>
 
-        {/* Botão Hamburger (Apenas Mobile) */}
-        {/* REMOVIDO o ThemeToggleButton daqui */}
-        <button
-          className={`${styles.hamburgerButton} md:hidden`}
-          onClick={toggleMenu}
-        >
-          {" "}
-          {/* Garante que só aparece em mobile */}☰
-        </button>
+        <div className="flex items-center gap-4 md:hidden">
+          <button className={`${styles.hamburgerButton}`} onClick={toggleMenu}>
+            ☰
+          </button>
+        </div>
 
-        {/* ====== MOBILE NAVIGATION (Dropdown) ====== */}
         {isMenuOpen && (
           <nav className={styles.navMobile}>
             <ul className={styles.navLinksMobile}>
-              {/* Links sempre visíveis */}
               <li>
                 <Link to="/vacancies" onClick={toggleMenu}>
                   Buscar Vagas
@@ -91,7 +84,6 @@ export default function Header() {
                 </Link>
               </li>
 
-              {/* Links/Botões de Autenticação Condicionais */}
               {isAuthenticated ? (
                 <>
                   <li>
@@ -127,13 +119,8 @@ export default function Header() {
                 </>
               )}
 
-              {/* Botão de Tema (Sempre Visível DENTRO do Menu Mobile) */}
               <li className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-                {" "}
-                {/* Linha divisória e espaço */}
                 <div className="flex justify-between items-center">
-                  {" "}
-                  {/* Alinha texto e botão */}
                   <span>Alternar Tema:</span>
                   <ThemeToggleButton />
                 </div>

@@ -1,4 +1,3 @@
-// src/pages/VacanciesPage.jsx
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -11,13 +10,12 @@ import { useDebounce } from "use-debounce";
 export default function VacanciesPage() {
   const { isAuthenticated } = useAuth();
   const [allJobs] = useState(mockJobs);
-  const [filteredJobs, setFilteredJobs] = useState([]); // Start empty
+  const [filteredJobs, setFilteredJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const location = useLocation(); // Needed for navigate pathname
+  const location = useLocation();
 
-  // State for the immediate input values
   const [immediateKeyword, setImmediateKeyword] = useState(
     searchParams.get("keyword") || ""
   );
@@ -25,11 +23,9 @@ export default function VacanciesPage() {
     searchParams.get("location") || ""
   );
 
-  // Debounced values for filtering
   const [debouncedKeyword] = useDebounce(immediateKeyword, 500);
   const [debouncedLocation] = useDebounce(immediateLocation, 500);
 
-  // Effect to filter jobs based on debounced criteria
   useEffect(() => {
     setIsLoading(true);
     console.log("Filtering with:", {
@@ -39,7 +35,6 @@ export default function VacanciesPage() {
 
     const lowerKeyword = debouncedKeyword.toLowerCase();
 
-    // Simulate filtering (replace with API call later)
     const results = allJobs.filter((job) => {
       const matchKeyword = lowerKeyword
         ? job.title.toLowerCase().includes(lowerKeyword) ||
@@ -53,13 +48,11 @@ export default function VacanciesPage() {
       return matchKeyword && matchLocation;
     });
 
-    // Simulate network delay (optional)
     const timer = setTimeout(() => {
       setFilteredJobs(results);
       setIsLoading(false);
     }, 150);
 
-    // Update URL query parameters based on debounced values
     const newSearchParams = new URLSearchParams();
     if (debouncedKeyword) newSearchParams.set("keyword", debouncedKeyword);
     if (debouncedLocation) newSearchParams.set("location", debouncedLocation);
@@ -67,22 +60,20 @@ export default function VacanciesPage() {
       replace: true,
     });
 
-    return () => clearTimeout(timer); // Cleanup timer
+    return () => clearTimeout(timer);
   }, [
     debouncedKeyword,
     debouncedLocation,
     allJobs,
     navigate,
     location.pathname,
-  ]); // Added location.pathname dependency
+  ]);
 
-  // Handler for immediate changes from SearchBar
   const handleCriteriaChange = (criteria) => {
     setImmediateKeyword(criteria.keyword);
     setImmediateLocation(criteria.location);
   };
 
-  // Logic to limit displayed jobs for non-authenticated users
   const displayLimit = 5;
   const jobsToShow = isAuthenticated
     ? filteredJobs
@@ -98,12 +89,9 @@ export default function VacanciesPage() {
           initialKeyword={immediateKeyword}
           initialLocation={immediateLocation}
           onCriteriaChange={handleCriteriaChange}
-          // Optionally pass onSearch if the button should trigger immediate filtering
-          // onSearch={handleCriteriaChange}
         />
       </div>
 
-      {/* Login/Register Prompt for non-authenticated users */}
       {hasMoreJobs && (
         <div className="mb-6 p-4 bg-blue-100 border border-blue-300 text-blue-800 rounded dark:bg-blue-900 dark:border-blue-700 dark:text-blue-100 text-center text-sm">
           Mostrando os primeiros {displayLimit} de {filteredJobs.length}{" "}
@@ -125,7 +113,6 @@ export default function VacanciesPage() {
         </div>
       )}
 
-      {/* Job List Container */}
       <div className={styles.jobListContainer}>
         {isLoading ? (
           <p className={styles.loadingMessage}>Filtrando vagas...</p>
@@ -142,5 +129,4 @@ export default function VacanciesPage() {
   );
 }
 
-// Make sure to import useLocation at the top if it's not already there
 import { useLocation } from "react-router-dom";

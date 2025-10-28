@@ -36,7 +36,6 @@ export default function JobCard({ isAuthenticated, onAuthRequired }) {
           <h2 className={styles.categoryTitle}>
             Explore por <span>categorias</span>
           </h2>
-
           <Link
             to="/vagas"
             className={`${styles.showAllButton} ${styles.showAllButtonDesktop}`}
