@@ -1,45 +1,40 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useState, useContext, useEffect } from "react";
+import toast from "react-hot-toast";
 
-// cria o contexto
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
-// hook para usar o contexto
-export function useAuth() {
-  return useContext(AuthContext);
-}
-
-// provider do AuthContext
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // carregar usuário do localStorage apenas se a sessão estiver ativa
   useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    const sessionActive = sessionStorage.getItem("sessionActive");
-
-    if (savedUser && sessionActive) {
-      setUser(JSON.parse(savedUser));
-    } else {
-      setUser(null);
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      setIsAuthenticated(true);
     }
   }, []);
 
-  // login (simula autenticação e cria sessão)
   const login = (userData) => {
+    localStorage.setItem("user", JSON.stringify(userData));
     setUser(userData);
-    localStorage.setItem("user", JSON.stringify(userData)); // mantém os dados salvos
-    sessionStorage.setItem("sessionActive", "true"); // marca a sessão como ativa
+    setIsAuthenticated(true);
   };
 
-  // logout (encerra sessão mas mantém dados do cadastro)
   const logout = () => {
+    localStorage.removeItem("user");
     setUser(null);
-    sessionStorage.removeItem("sessionActive"); // encerra a sessão
+    setIsAuthenticated(false);
+    toast.success("Você saiu com sucesso!");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
+}
+
+export function useAuth() {
+  return useContext(AuthContext);
 }

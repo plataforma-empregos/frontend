@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/JobCard.module.css";
 import {
@@ -14,9 +13,7 @@ import {
   FaGavel,
 } from "react-icons/fa";
 
-export default function JobCard() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
+export default function JobCard({ isAuthenticated, onAuthRequired }) {
   const categories = [
     { name: "Marketing", jobs: 85, icon: <FaBullhorn /> },
     { name: "Design", jobs: 55, icon: <FaPaintBrush /> },
@@ -30,9 +27,7 @@ export default function JobCard() {
     { name: "Jurídico", jobs: 29, icon: <FaGavel /> },
   ];
 
-  const handleMostrarTodas = () => {
-    setSelectedCategory(null);
-  };
+  const handleMostrarTodas = () => {};
 
   return (
     <div className={styles.categoryGrid}>
@@ -50,21 +45,46 @@ export default function JobCard() {
           </Link>
         </div>
 
-        <div className={styles.cardContainer}>
-          {categories.map((cat, index) => (
-            <button
-              key={`${cat.name}-${index}`}
-              className={`${styles.categoryCard} ${
-                selectedCategory === cat.name ? styles.selected : ""
-              }`}
-              onClick={() => setSelectedCategory(cat.name)}
-              aria-pressed={selectedCategory === cat.name}
+        <div className={styles.cardContainerWrapper}>
+          <div className={styles.cardContainer}>
+            {categories.map((cat, index) => (
+              <Link
+                key={`${cat.name}-${index}`}
+                to={
+                  isAuthenticated
+                    ? `/vagas?query=${encodeURIComponent(cat.name)}`
+                    : "#"
+                }
+                onClick={
+                  !isAuthenticated
+                    ? (e) => {
+                        e.preventDefault();
+                        onAuthRequired();
+                      }
+                    : undefined
+                }
+                className={`${styles.categoryCard} ${
+                  !isAuthenticated ? styles.disabledCard : ""
+                }`}
+              >
+                <div className={styles.cardIcon}>{cat.icon}</div>
+                <h3>{cat.name}</h3>
+                <p>
+                  {cat.jobs > 0 ? `${cat.jobs} Vagas disponíveis` : "Ver vagas"}
+                </p>
+              </Link>
+            ))}
+          </div>
+
+          {!isAuthenticated && (
+            <div
+              className={styles.loginPromptOverlay}
+              onClick={onAuthRequired}
+              title="Faça login para explorar"
             >
-              <div className={styles.cardIcon}>{cat.icon}</div>
-              <h3>{cat.name}</h3>
-              <p>{cat.jobs} Vagas disponíveis</p>
-            </button>
-          ))}
+              <span>Faça login para explorar categorias</span>
+            </div>
+          )}
         </div>
 
         <div className={styles.showAllContainerMobile}>

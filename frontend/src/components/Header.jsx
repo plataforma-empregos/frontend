@@ -1,15 +1,21 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import Logo from "./Logo";
 import styles from "../styles/Header.module.css";
-import { useAuth } from "../context/AuthContext";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 export default function Header() {
+  const { isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleMobileLogout = () => {
+    logout();
+    toggleMenu();
   };
 
   return (
@@ -19,7 +25,6 @@ export default function Header() {
           <Logo />
         </div>
 
-        {/* Menu Desktop */}
         <nav className={styles.navDesktop}>
           <ul className={styles.navList}>
             <li>
@@ -29,7 +34,18 @@ export default function Header() {
               <Link to="/companies">Buscar Empresas</Link>
             </li>
 
-            {!user && (
+            {isAuthenticated ? (
+              <>
+                <li>
+                  <Link to="/profile">Perfil</Link>
+                </li>
+                <li>
+                  <button onClick={logout} className={styles.logoutButton}>
+                    Sair
+                  </button>
+                </li>
+              </>
+            ) : (
               <>
                 <li>
                   <Link to="/login">Login</Link>
@@ -42,30 +58,18 @@ export default function Header() {
               </>
             )}
 
-            {user && (
-              <>
-                <li>
-                  <Link to="/profile">Perfil</Link>
-                </li>
-                <li>
-                  <button
-                    onClick={logout}
-                    className={styles.signupButton}
-                  >
-                    Logout
-                  </button>
-                </li>
-              </>
-            )}
+            <li>
+              <ThemeToggleButton />
+            </li>
           </ul>
         </nav>
 
-        {/* Botão hambúrguer */}
-        <button className={styles.hamburgerButton} onClick={toggleMenu}>
-          ☰
-        </button>
+        <div className="flex items-center gap-4 md:hidden">
+          <button className={`${styles.hamburgerButton}`} onClick={toggleMenu}>
+            ☰
+          </button>
+        </div>
 
-        {/* Menu Mobile */}
         {isMenuOpen && (
           <nav className={styles.navMobile}>
             <ul className={styles.navLinksMobile}>
@@ -80,7 +84,23 @@ export default function Header() {
                 </Link>
               </li>
 
-              {!user && (
+              {isAuthenticated ? (
+                <>
+                  <li>
+                    <Link to="/profile" onClick={toggleMenu}>
+                      Perfil
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleMobileLogout}
+                      className={styles.logoutButtonMobile}
+                    >
+                      Sair
+                    </button>
+                  </li>
+                </>
+              ) : (
                 <>
                   <li>
                     <Link to="/login" onClick={toggleMenu}>
@@ -99,26 +119,12 @@ export default function Header() {
                 </>
               )}
 
-              {user && (
-                <>
-                  <li>
-                    <Link to="/profile" onClick={toggleMenu}>
-                      Perfil
-                    </Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => {
-                        logout();
-                        toggleMenu();
-                      }}
-                      className={styles.signupButtonMobile}
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </>
-              )}
+              <li className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="flex justify-between items-center">
+                  <span>Alternar Tema:</span>
+                  <ThemeToggleButton />
+                </div>
+              </li>
             </ul>
           </nav>
         )}

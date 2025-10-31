@@ -1,0 +1,43 @@
+export const mockJobs = [
+  {
+    id: "1",
+    title: "Desenvolvedor(a) Front-end React Pleno",
+    company: "Tech Solutions Ltda.",
+    location: "Sao Paulo",
+    cityState: "São Paulo, SP",
+    type: "Tempo Integral",
+    description: "Buscamos dev React com experiência em Next.js...",
+    imageUrl: "https://picsum.photos/seed/TS/60/60",
+  },
+  {
+    id: "2",
+    title: "Engenheiro(a) de Software Back-end Java",
+    company: "Inova Corp",
+    location: "Rio de Janeiro",
+    cityState: "Rio de Janeiro, RJ",
+    type: "Remoto",
+    description: "Vaga para desenvolvedor Java/Spring Boot...",
+    imageUrl: "https://picsum.photos/seed/TS/60/60",
+  },
+  {
+    id: "3",
+    title: "UX/UI Designer Sênior",
+    company: "Creative Minds Studio",
+    location: "Sao Paulo",
+    cityState: "São Paulo, SP",
+    type: "Híbrido",
+    description: "Procuramos designer com foco em usabilidade e interfaces...",
+    imageUrl: "https://picsum.photos/seed/TS/60/60",
+  },
+  {
+    id: "4",
+    title: "Analista de Dados Jr (Power BI)",
+    company: "Data Insights",
+    location: "Minas Gerais",
+    cityState: "Belo Horizonte, MG",
+    type: "Tempo Integral",
+    description:
+      "Oportunidade para Analista Jr. com conhecimento em Power BI...",
+    imageUrl: "https://picsum.photos/seed/TS/60/60",
+  },
+];

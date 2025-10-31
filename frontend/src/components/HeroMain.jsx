@@ -1,7 +1,11 @@
 import SearchBar from "./SearchBar";
 import styles from "../styles/HeroMain.module.css";
 
-export default function HeroMain() {
+export default function HeroMain({
+  isAuthenticated,
+  onAuthRequired,
+  onSearch,
+}) {
   return (
     <section className={styles.hero}>
       <div className={styles.content}>
@@ -18,7 +22,19 @@ export default function HeroMain() {
           talento e dá passos concretos rumo ao desenvolvimento profissional.
         </p>
 
-        <SearchBar />
+        <div className={styles.searchBarWrapper}>
+          <SearchBar onSearch={onSearch} />
+
+          {!isAuthenticated && (
+            <div
+              className={styles.loginPromptOverlay}
+              onClick={onAuthRequired}
+              title="Faça login para buscar"
+            >
+              <span>Faça login para buscar vagas</span>
+            </div>
+          )}
+        </div>
 
         <p className={styles.popular}>
           Em alta:{" "}
