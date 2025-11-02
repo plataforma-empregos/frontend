@@ -45,46 +45,28 @@ export default function JobCard({ isAuthenticated, onAuthRequired }) {
           </Link>
         </div>
 
-        <div className={styles.cardContainerWrapper}>
-          <div className={styles.cardContainer}>
-            {categories.map((cat, index) => (
-              <Link
-                key={`${cat.name}-${index}`}
-                to={
-                  isAuthenticated
-                    ? `/vagas?query=${encodeURIComponent(cat.name)}`
-                    : "#"
-                }
-                onClick={
-                  !isAuthenticated
-                    ? (e) => {
-                        e.preventDefault();
-                        onAuthRequired();
-                      }
-                    : undefined
-                }
-                className={`${styles.categoryCard} ${
-                  !isAuthenticated ? styles.disabledCard : ""
-                }`}
-              >
-                <div className={styles.cardIcon}>{cat.icon}</div>
-                <h3>{cat.name}</h3>
-                <p>
-                  {cat.jobs > 0 ? `${cat.jobs} Vagas disponíveis` : "Ver vagas"}
-                </p>
-              </Link>
-            ))}
-          </div>
-
-          {!isAuthenticated && (
-            <div
-              className={styles.loginPromptOverlay}
-              onClick={onAuthRequired}
-              title="Faça login para explorar"
+        <div className={styles.cardContainer}>
+          {categories.map((cat, index) => (
+            <Link
+              key={`${cat.name}-${index}`}
+              to={`/vagas?query=${encodeURIComponent(cat.name)}`}
+              onClick={
+                !isAuthenticated
+                  ? (e) => {
+                      e.preventDefault();
+                      onAuthRequired();
+                    }
+                  : undefined
+              }
+              className={styles.categoryCard}
             >
-              <span>Faça login para explorar categorias</span>
-            </div>
-          )}
+              <div className={styles.cardIcon}>{cat.icon}</div>
+              <h3>{cat.name}</h3>
+              <p>
+                {cat.jobs > 0 ? `${cat.jobs} Vagas disponíveis` : "Ver vagas"}
+              </p>
+            </Link>
+          ))}
         </div>
 
         <div className={styles.showAllContainerMobile}>

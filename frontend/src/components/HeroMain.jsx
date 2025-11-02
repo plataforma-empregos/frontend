@@ -6,6 +6,14 @@ export default function HeroMain({
   onAuthRequired,
   onSearch,
 }) {
+  const handleSearchAction = (criteria) => {
+    if (isAuthenticated) {
+      onSearch(criteria);
+    } else {
+      onAuthRequired();
+    }
+  };
+
   return (
     <section className={styles.hero}>
       <div className={styles.content}>
@@ -22,19 +30,7 @@ export default function HeroMain({
           talento e dá passos concretos rumo ao desenvolvimento profissional.
         </p>
 
-        <div className={styles.searchBarWrapper}>
-          <SearchBar onSearch={onSearch} />
-
-          {!isAuthenticated && (
-            <div
-              className={styles.loginPromptOverlay}
-              onClick={onAuthRequired}
-              title="Faça login para buscar"
-            >
-              <span>Faça login para buscar vagas</span>
-            </div>
-          )}
-        </div>
+        <SearchBar onSearch={handleSearchAction} />
 
         <p className={styles.popular}>
           Em alta:{" "}

@@ -43,7 +43,7 @@ export default function Login() {
     console.log("Google ID Token:", googleIdToken);
 
     try {
-      // --- SIMULAÇÃO CHAMADA API GOOGLE LOGIN ---
+      // --- SIMULAÇÃO DA CHAMADA DA API GOOGLE LOGIN (IMPLEMENTAÇÃO DA CMNC ) ---
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       function decodeJwt(token) {
