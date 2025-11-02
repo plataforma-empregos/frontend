@@ -11,6 +11,8 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
 
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -63,7 +65,6 @@ export default function Login() {
 
       login(mockUserDataFromBackend);
 
-      // Usa o nome obtido no toast!
       toast.success(`Login com Google bem-sucedido, ${userName}!`);
       navigate("/");
     } catch (error) {
@@ -78,7 +79,7 @@ export default function Login() {
   const handleGoogleError = () => {
     console.error("Falha no login com Google.");
     toast.error("Falha no login com o Google. Tente novamente.");
-    setIsLoading(false); // Garante que o loading termine em caso de erro
+    setIsLoading(false);
   };
 
   return (

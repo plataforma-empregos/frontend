@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate, Link } from "react-router-dom";
+import {
+  useSearchParams,
+  useLocation,
+  useNavigate,
+  Link,
+} from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { mockJobs } from "../data/mockJobs";
 import JobListingItem from "../components/JobListingItem";
@@ -128,5 +133,3 @@ export default function VacanciesPage() {
     </div>
   );
 }
-
-import { useLocation } from "react-router-dom";
