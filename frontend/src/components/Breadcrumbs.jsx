@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
-import { routes } from "../App.jsx";
+import { routes } from "../routes/index";
 
 export default function Breadcrumbs() {
   const breadcrumbs = useBreadcrumbs(routes);
