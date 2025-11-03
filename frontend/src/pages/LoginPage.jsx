@@ -23,12 +23,11 @@ export default function Login() {
 
   const onSubmit = async (data) => {
     setIsLoading(true);
-    console.log("Dados prontos para enviar à API:", data);
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       const mockUserData = { name: "Usuário", email: data.email };
       login(mockUserData);
-      toast.success(`Bem-vindo(a) de volta!`);
+      toast.success("Bem-vindo(a) de volta!");
       navigate("/");
     } catch (error) {
       toast.error("Email ou senha inválidos.");
@@ -40,10 +39,8 @@ export default function Login() {
   const handleGoogleSuccess = async (credentialResponse) => {
     setIsLoading(true);
     const googleIdToken = credentialResponse.credential;
-    console.log("Google ID Token:", googleIdToken);
 
     try {
-      // --- SIMULAÇÃO DA CHAMADA DA API GOOGLE LOGIN (IMPLEMENTAÇÃO DA CMNC ) ---
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       function decodeJwt(token) {
@@ -53,6 +50,7 @@ export default function Login() {
           return null;
         }
       }
+
       const decodedToken = decodeJwt(googleIdToken);
 
       const userName =
@@ -64,7 +62,6 @@ export default function Login() {
       };
 
       login(mockUserDataFromBackend);
-
       toast.success(`Login com Google bem-sucedido, ${userName}!`);
       navigate("/");
     } catch (error) {
@@ -75,7 +72,6 @@ export default function Login() {
     }
   };
 
-  // Função chamada quando o login com Google FALHA
   const handleGoogleError = () => {
     console.error("Falha no login com Google.");
     toast.error("Falha no login com o Google. Tente novamente.");
@@ -83,20 +79,20 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-96 text-center">
+    <div className="min-h-screen flex items-center justify-center bg-[var(--clr-bg-primary)] transition-colors duration-300">
+      <div className="bg-[var(--clr-bg-secondary)] p-8 rounded-2xl shadow-lg w-96 text-center transition-colors duration-300">
         <div className="mb-6">
           <Logo />
         </div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-gray-700 text-left">
+            <label className="block text-[var(--clr-text-primary)] text-left">
               Endereço de E-mail
             </label>
             <input
               type="email"
-              className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700"
+              className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 bg-[var(--clr-bg-primary)] text-[var(--clr-text-primary)] placeholder-gray-400"
               placeholder="contact@email.com"
               {...register("email", {
                 required: "O email é obrigatório.",
@@ -108,12 +104,15 @@ export default function Login() {
               </p>
             )}
           </div>
+
           <div>
-            <label className="block text-gray-700 text-left">Senha</label>
+            <label className="block text-[var(--clr-text-primary)] text-left">
+              Senha
+            </label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 pr-10"
+                className="w-full mt-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-700 pr-10 bg-[var(--clr-bg-primary)] text-[var(--clr-text-primary)] placeholder-gray-400"
                 placeholder="********"
                 {...register("password", {
                   required: "A senha é obrigatória.",
@@ -123,7 +122,7 @@ export default function Login() {
               <button
                 type="button"
                 onClick={() => setShowPassword((s) => !s)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-[#0069A8] p-1 bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-sky-700 p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none"
                 aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
               >
                 {showPassword ? (
@@ -156,38 +155,44 @@ export default function Login() {
               </p>
             )}
           </div>
+
           <div className="flex flex-col gap-2">
             <Link
               to="/forgot-password"
-              className="mx-auto text-xs text-[#0069A8] hover:underline"
+              className="mx-auto text-xs text-sky-700 hover:underline"
             >
               Esqueceu a senha?
             </Link>
             <div className="flex items-center">
               <input type="checkbox" className="mr-2" {...register("terms")} />
-              <span className="text-gray-600 text-sm">
+              <span className="text-[var(--clr-text-primary)] text-sm">
                 Mantenha-me conectado
               </span>
             </div>
           </div>
+
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-[#0069A8] text-white p-2 rounded-lg hover:bg-[#005080] transition disabled:opacity-50"
+            className="w-full bg-sky-700 text-white p-2 rounded-lg hover:bg-sky-800 transition disabled:opacity-50"
           >
             {isLoading ? "Entrando..." : "Login"}
           </button>
         </form>
 
         <div className="flex items-center my-4">
-          <hr className="flex-grow border-gray-300" />
-          <span className="px-2 text-gray-500 text-sm">Ou entre com</span>
-          <hr className="flex-grow border-gray-300" />
+          <hr className="flex-grow border-gray-300 dark:border-gray-600" />
+          <span className="px-2 text-gray-500 dark:text-gray-400 text-sm">
+            Ou entre com
+          </span>
+          <hr className="flex-grow border-gray-300 dark:border-gray-600" />
         </div>
 
         <div className="w-full flex justify-center">
           {isLoading ? (
-            <div className="text-gray-500 py-2">Processando...</div>
+            <div className="text-gray-500 dark:text-gray-400 py-2">
+              Processando...
+            </div>
           ) : (
             <GoogleLogin
               onSuccess={handleGoogleSuccess}
@@ -197,7 +202,7 @@ export default function Login() {
           )}
         </div>
 
-        <p className="text-center text-sm text-gray-600 mt-4">
+        <p className="text-center text-sm text-[var(--clr-text-primary)] mt-4">
           <Link to="/register" className="text-sky-700 underline">
             Crie uma conta
           </Link>
