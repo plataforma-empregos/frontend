@@ -4,9 +4,10 @@ import styles from "../styles/SearchBar.module.css";
 export default function SearchBar({
   initialKeyword = "",
   initialLocation = "",
-  onCriteriaChange,
-  onSearch,
+  onCriteriaChange, 
+  onSearch,         
 }) {
+
   const [keyword, setKeyword] = useState(initialKeyword);
   const [location, setLocation] = useState(initialLocation);
 
@@ -32,7 +33,6 @@ export default function SearchBar({
     }
   };
 
-  // Função para busca explícita (botão/Enter)
   const handleSearchClick = () => {
     if (onSearch) {
       onSearch({ keyword, location });
@@ -49,10 +49,13 @@ export default function SearchBar({
         value={keyword}
         onChange={(e) => handleInputChange("keyword", e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && handleSearchClick()}
+        className={styles.searchInput}
       />
+
       <select
         value={location}
         onChange={(e) => handleInputChange("location", e.target.value)}
+        className={styles.locationSelect}
       >
         <option value="">Selecione a localização</option>
         <option value="Sao Paulo">São Paulo, Brasil</option>
@@ -65,6 +68,7 @@ export default function SearchBar({
         <option value="Pernambuco">Pernambuco, Brasil</option>
         <option value="Ceara">Ceará, Brasil</option>
       </select>
+
       <button
         type="button"
         onClick={handleSearchClick}

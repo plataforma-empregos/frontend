@@ -19,7 +19,7 @@ export default function HomePage() {
     if (keyword) searchParams.set("keyword", keyword);
     if (location) searchParams.set("location", location);
 
-    navigate(`/vagas?${searchParams.toString()}`);
+    navigate(`/vacancies?${searchParams.toString()}`);
   };
 
   return (
