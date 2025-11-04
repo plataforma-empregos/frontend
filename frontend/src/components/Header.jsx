@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; 
 import { useAuth } from "../context/AuthContext";
 import Logo from "./Logo";
 import styles from "../styles/Header.module.css";
@@ -8,14 +8,23 @@ import ThemeToggleButton from "./ThemeToggleButton";
 export default function Header() {
   const { isAuthenticated, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate(); 
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Função para logout no desktop
+  const handleLogout = () => {
+    logout();
+    navigate("/"); 
+  };
+
+  // Função para logout no mobile
   const handleMobileLogout = () => {
     logout();
     toggleMenu();
+    navigate("/"); 
   };
 
   return (
@@ -40,7 +49,10 @@ export default function Header() {
                   <Link to="/profile">Perfil</Link>
                 </li>
                 <li>
-                  <button onClick={logout} className={styles.logoutButton}>
+                  <button
+                    onClick={handleLogout} 
+                    className={styles.logoutButton}
+                  >
                     Sair
                   </button>
                 </li>
@@ -64,6 +76,7 @@ export default function Header() {
           </ul>
         </nav>
 
+        {/* Mobile Menu */}
         <div className="flex items-center gap-4 md:hidden">
           <button className={`${styles.hamburgerButton}`} onClick={toggleMenu}>
             ☰
@@ -93,7 +106,7 @@ export default function Header() {
                   </li>
                   <li>
                     <button
-                      onClick={handleMobileLogout}
+                      onClick={handleMobileLogout} // <-- logout + redirecionamento
                       className={styles.logoutButtonMobile}
                     >
                       Sair
