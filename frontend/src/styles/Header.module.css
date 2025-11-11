@@ -1,6 +1,6 @@
 .header {
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--clr-bg-primary);
   border-bottom: 1px solid #eaeaea;
   padding: 1rem 0;
   position: sticky;
@@ -40,15 +40,15 @@
 .navLinks a,
 .authLinks a {
   text-decoration: none;
-  color: #1a2b4c;
+  color: var(--clr-text-primary);
   font-weight: 500;
   font-size: 0.95rem;
-  transition: background-color 0.2s ease;
+  transition: color 0.2s ease;
 }
 
 .navLinks a:hover,
 .authLinks a:hover {
-  color: #007bff;
+  color: var(--clr-accent-secondary);
 }
 
 .navList {
@@ -61,31 +61,72 @@
   padding: 0;
 }
 
-.navList a {
+.navList a,
+.navList button {
   text-decoration: none;
-  color: #1a2b4c;
+  color: var(--clr-text-primary);
   font-weight: 500;
   white-space: nowrap;
   font-size: 0.95rem;
   font-family: "Poppins", sans-serif;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 .navList a:hover {
-  color: #007bff;
+  color: var(--clr-accent-secondary);
 }
 
-.signupButton {
-  background-color: #578fca;
-  color: #ffffff !important;
+.navList .signupButton {
+  background: var(--clr-accent-primary);
+  color: var(--clr-text-inverse) !important;
   padding: 0.5rem 1rem;
   border-radius: 6px;
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
+.navList .signupButton:hover {
+  background-color: var(--clr-accent-tertiary);
+  color: var(--clr-text-inverse) !important;
+}
 
-.signupButton:hover {
-  background-color: #0056b3;
+.navList a.signupButton:hover {
+  color: var(--clr-text-inverse) !important;
+}
+
+.profileButton {
+  background-color: var(--clr-text-muted);
+  color: var(--clr-text-inverse) !important;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.profileButton:hover {
+  background-color: var(--clr-text-secondary);
+  color: var(--clr-text-inverse) !important;
+}
+
+.navList .logoutButton {
+  background-color: var(--clr-danger-primary);
+  color: var(--clr-text-inverse) !important;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.navList .logoutButton:hover {
+  background-color: var(--clr-danger-secondary);
+  color: var(--clr-text-inverse) !important;
+}
+
+.navList button.logoutButton:hover {
+  color: var(--clr-text-inverse) !important;
 }
 
 .hamburgerButton,
@@ -93,7 +134,7 @@
   display: none;
 }
 
-/*  Media Queries */
+/* Media Queries */
 @media (max-width: 768px) {
   .navDesktop {
     display: none;
@@ -105,7 +146,7 @@
     border: none;
     font-size: 28px;
     cursor: pointer;
-    color: #1a2b4c;
+    color: var(--clr-text-primary);
   }
 
   .navMobile {
@@ -114,7 +155,7 @@
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: #ffffff;
+    background-color: var(--clr-bg-primary);
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 1rem;
   }
@@ -129,20 +170,45 @@
     gap: 1rem;
   }
 
-  .navLinksMobile a {
+  .navLinksMobile a,
+  .navLinksMobile button {
     text-decoration: none;
-    color: #1a2b4c;
+    color: var(--clr-text-primary);
     font-weight: 500;
     display: block;
     width: 100%;
+    padding: 0.5rem 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1rem;
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .navLinksMobile a:hover,
+  .navLinksMobile button:hover {
+    color: var(--clr-accent-secondary);
   }
 
   .signupButtonMobile {
-    background-color: #578fca;
-    color: #ffffff;
-    padding: 0.5rem 1rem;
+    background-color: var(--clr-accent-primary) !important;
+    color: var(--clr-text-inverse) !important;
+    padding: 0.75rem 1rem !important;
     border-radius: 6px;
     font-weight: 600;
-    text-align: center;
+    text-align: center !important;
+  }
+  .signupButtonMobile:hover {
+    background-color: var(--clr-accent-tertiary) !important;
+    color: var(--clr-text-inverse) !important;
+  }
+
+  .logoutButtonMobile {
+    color: var(--clr-danger-primary) !important;
+    font-weight: 600;
+  }
+  .logoutButtonMobile:hover {
+    color: var(--clr-danger-secondary) !important;
   }
 }

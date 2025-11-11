@@ -1,7 +1,19 @@
 import SearchBar from "./SearchBar";
 import styles from "../styles/HeroMain.module.css";
 
-export default function HeroMain() {
+export default function HeroMain({
+  isAuthenticated,
+  onAuthRequired,
+  onSearch,
+}) {
+  const handleSearchAction = (criteria) => {
+    if (isAuthenticated) {
+      onSearch(criteria);
+    } else {
+      onAuthRequired();
+    }
+  };
+
   return (
     <section className={styles.hero}>
       <div className={styles.content}>
@@ -18,7 +30,7 @@ export default function HeroMain() {
           talento e dá passos concretos rumo ao desenvolvimento profissional.
         </p>
 
-        <SearchBar />
+        <SearchBar onSearch={handleSearchAction} />
 
         <p className={styles.popular}>
           Em alta:{" "}

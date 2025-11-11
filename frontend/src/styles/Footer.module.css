@@ -1,6 +1,6 @@
 .footer {
-  background-color: #202430;
-  color: #a0a8b9;
+  background-color: var(--clr-footer-bg);
+  color: var(--clr-footer-text);
   padding: 80px 0 20px 0;
   font-family: "Roboto", sans-serif;
 }
@@ -39,25 +39,25 @@
 }
 
 .footerDescription {
-  color: #d6d3eb;
+  color: var(--clr-footer-text);
   line-height: 1.6;
 }
 
 .titleColumnStandard {
-  color: #ffffff;
+  color: var(--clr-text-primary);
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 8px;
 }
 
 .footerColumn a {
-  color: #a0a8b9;
+  color: var(--clr-footer-text);
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .footerColumn a:hover {
-  color: #ffffff;
+  color: var(--clr-footer-link-hover);
 }
 
 .subscribeForm {
@@ -68,17 +68,18 @@
 .subscribeForm input {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #3e4d6c;
+  border: 1px solid var(--clr-footer-border);
   border-radius: 6px 0 0 6px;
-  background-color: #ffffff;
+  background-color: var(--clr-bg-primary);
+  color: var(--clr-text-primary);
   outline: none;
 }
 
 .subscribeForm button {
   padding: 10px 20px;
   border: none;
-  background-color: #578fca;
-  color: #ffffff;
+  background-color: var(--clr-accent-primary);
+  color: var(--clr-text-inverse);
   border-radius: 0 6px 6px 0;
   cursor: pointer;
   white-space: nowrap;
@@ -86,7 +87,7 @@
 }
 
 .subscribeForm button:hover {
-  background-color: #0056b3;
+  background-color: var(--clr-accent-tertiary);
 }
 
 .footerBottom {
@@ -94,8 +95,9 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 20px;
-  border-top: 1px solid #3e4d6c;
+  border-top: 1px solid var(--clr-footer-border);
   font-size: 14px;
+  color: var(--clr-footer-text);
 }
 
 .socialIcons {
@@ -104,17 +106,17 @@
 }
 
 .socialIcons a {
-  color: #a0a8b9;
+  color: var(--clr-footer-text);
   font-size: 20px;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .socialIcons a:hover {
-  color: #ffffff;
+  color: var(--clr-footer-link-hover);
 }
 
-/*Media Queries*/
+/* Media Queries */
 @media (max-width: 768px) {
   .footerContent {
     flex-direction: column;
@@ -122,12 +124,10 @@
     text-align: center;
     gap: 40px;
   }
-
   .logoColumn {
     align-items: center;
     text-align: center;
   }
-
   .linksWrapper {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -135,28 +135,23 @@
     width: 100%;
     text-align: center;
   }
-
   .newsletterColumn {
     text-align: center;
   }
-
   .subscribeForm {
     flex-direction: column;
     align-items: center;
   }
-
   .subscribeForm input,
   .subscribeForm button {
     width: 100%;
     max-width: 350px;
     border-radius: 6px;
   }
-
   .subscribeForm input {
     margin-bottom: 10px;
     text-align: center;
   }
-
   .footerBottom {
     flex-direction: column;
     gap: 20px;

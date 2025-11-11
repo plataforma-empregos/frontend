@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react"; 
-import { Link } from "react-router-dom"; 
+import React, { useState, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 
-// Lista de atualizações do sistema (exemplo)
 const updatesData = [
   {
     id: 1,
@@ -55,8 +54,7 @@ const updatesData = [
     id: 7,
     title: "Sistema de Ajuda",
     date: "2025-10-25",
-    description:
-      "Novos artigos de ajuda e tutoriais integrados na plataforma.",
+    description: "Novos artigos de ajuda e tutoriais integrados na plataforma.",
     category: "Novas Funcionalidades",
   },
   {
@@ -67,68 +65,61 @@ const updatesData = [
       "Implementamos autenticação com criptografia avançada para aumentar a segurança da sua conta.",
     category: "Correções",
   },
+  {
+    id: 9,
+    title: "Dark Mode e Página de Vagas",
+    date: "2025-10-27",
+    description:
+      "Adicionamos o modo escuro para melhor conforto visual e uma nova página dedicada para listagem de vagas.",
+    category: "Novas Funcionalidades",
+  },
 ];
 
-// Componente principal da página de atualizações
 export default function Updates() {
-  // Estado que controla se o botão "Voltar ao Topo" deve aparecer
   const [showButton, setShowButton] = useState(false);
-
-  // Estado que controla qual categoria de atualização está selecionada
   const [categoryFilter, setCategoryFilter] = useState("Todas");
 
-  // useEffect executa código quando o componente é carregado
   useEffect(() => {
-    // Faz a página começar no topo ao abrir a página de atualizações
     window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // Função que verifica a posição da rolagem
     const handleScroll = () => {
-      setShowButton(window.scrollY > 300); 
-      // Se o usuário rolou mais de 300 pixels, mostra o botão
+      setShowButton(window.scrollY > 300);
     };
-
-    // Adiciona "ouvinte" para monitorar a rolagem
     window.addEventListener("scroll", handleScroll);
-
-    // Remove o "ouvinte" ao desmontar o componente para evitar problemas
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Função para rolar a página de volta ao topo
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Lista de categorias disponíveis para filtro
-  const categories = ["Todas", "Novas Funcionalidades", "Correções", "Melhorias"];
+  const categories = [
+    "Todas",
+    "Novas Funcionalidades",
+    "Correções",
+    "Melhorias",
+  ];
 
-  // Filtra as atualizações de acordo com a categoria selecionada
   const filteredUpdates = useMemo(() => {
     if (categoryFilter === "Todas") return updatesData;
     return updatesData.filter((u) => u.category === categoryFilter);
-  }, [categoryFilter]); // useMemo só recalcula quando categoryFilter muda
+  }, [categoryFilter]);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 relative">
-      {/* Container principal da página */}
-      <div className="max-w-4xl w-full bg-white rounded-2xl shadow-lg p-8">
-        {/* Título */}
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+    <div className="min-h-screen bg-[var(--clr-bg-secondary)] flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-4xl w-full bg-[var(--clr-bg-primary)] rounded-2xl shadow-lg p-8">
+        <h1 className="text-3xl font-bold text-[var(--clr-text-primary)] mb-6 text-center">
           Atualizações
         </h1>
 
-        {/* Botões de filtro de categoria */}
         <div className="mb-6 flex flex-wrap gap-2">
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setCategoryFilter(cat)} 
-              // Ao clicar, muda a categoria selecionada
+              onClick={() => setCategoryFilter(cat)}
               className={`px-4 py-2 rounded-full text-sm font-medium border transition ${
                 categoryFilter === cat
-                  ? "bg-blue-600 text-white border-blue-600"
-                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+                  ? "bg-[var(--clr-accent-primary)] text-[var(--clr-text-inverse)] border-[var(--clr-accent-primary)]"
+                  : "bg-[var(--clr-bg-primary)] text-[var(--clr-text-primary)] border-[var(--clr-footer-border)] hover:bg-[var(--clr-bg-secondary)]"
               }`}
             >
               {cat}
@@ -136,43 +127,43 @@ export default function Updates() {
           ))}
         </div>
 
-        {/* Lista de atualizações */}
-        <div className="space-y-6 text-gray-700 mt-4">
+        <div className="space-y-6 text-[var(--clr-text-primary)] mt-4">
           {filteredUpdates.map((update) => (
             <article
               key={update.id}
-              className="border-l-4 border-blue-600 pl-4 py-3 hover:bg-gray-50 transition"
+              className="border-l-4 border-[var(--clr-accent-primary)] pl-4 py-3 hover:bg-[var(--clr-bg-secondary)] transition"
             >
-              {/* Título da atualização */}
-              <h2 className="text-xl font-semibold mb-1">{update.title}</h2>
-              {/* Data e categoria */}
-              <p className="text-sm text-gray-500 mb-2">{update.date} · {update.category}</p>
-              {/* Descrição da atualização */}
+              <h2 className="text-xl font-semibold mb-1 text-[var(--clr-text-primary)]">
+                {update.title}
+              </h2>
+              <p className="text-sm text-[var(--clr-text-secondary)] mb-2">
+                {update.date} · {update.category}
+              </p>
               <p>{update.description}</p>
             </article>
           ))}
 
-          {/* Mensagem caso não haja atualizações na categoria selecionada */}
           {filteredUpdates.length === 0 && (
-            <p className="text-gray-500 text-center mt-6">
+            <p className="text-[var(--clr-text-secondary)] text-center mt-6">
               Nenhuma atualização encontrada para esta categoria.
             </p>
           )}
         </div>
 
-        {/* Link para voltar à página inicial */}
-        <div className="mt-10 flex items-center justify-between border-t pt-4">
-          <Link to="/" className="text-blue-600 hover:underline text-sm">
+        <div className="mt-10 flex items-center justify-between border-t border-[var(--clr-footer-border)] pt-4">
+          <Link
+            to="/"
+            className="text-[var(--clr-accent-secondary)] hover:underline text-sm"
+          >
             ← Voltar para o site
           </Link>
         </div>
       </div>
 
-      {/* Botão Voltar ao Topo, aparece apenas se showButton for true */}
       {showButton && (
         <button
-          onClick={scrollToTop} 
-          className="fixed bottom-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition duration-300"
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 bg-[var(--clr-accent-primary)] text-[var(--clr-text-inverse)] px-4 py-2 rounded-full shadow-lg hover:bg-[var(--clr-accent-tertiary)] transition duration-300"
           aria-label="Voltar ao topo"
         >
           ↑ Topo

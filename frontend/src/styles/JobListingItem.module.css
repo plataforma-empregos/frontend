@@ -1,0 +1,87 @@
+.jobItem {
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: var(--clr-bg-primary);
+  gap: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.jobItem:hover {
+  box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+html[data-theme="dark"] .jobItem {
+  border-bottom-color: var(--clr-border-dark-alt, #333);
+}
+
+.jobItem:last-child {
+  border-bottom: none;
+}
+
+.companyLogo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.jobInfo {
+  flex-grow: 1;
+}
+
+.jobTitle {
+  font-weight: 600;
+  color: var(--clr-text-primary);
+  margin-bottom: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.companyName,
+.location {
+  font-size: 0.9rem;
+  color: var(--clr-text-secondary);
+  margin-bottom: 0.1rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.detailsButton {
+  background-color: var(--clr-accent-primary);
+  color: var(--clr-text-inverse);
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.detailsButton:hover {
+  background-color: var(--clr-accent-tertiary);
+}
+
+/* Media Queries */
+@media (max-width: 640px) {
+  .jobItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .actions {
+    margin-top: 1rem;
+    width: 100%;
+    margin-left: 0;
+  }
+  .detailsButton {
+    width: 100%;
+    text-align: center;
+  }
+}

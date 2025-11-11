@@ -97,26 +97,32 @@ export default function Termsofuse() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 relative">
-      <div className="max-w-4xl w-full bg-white rounded-2xl shadow-lg p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+    <div className="min-h-screen bg-[var(--clr-bg-secondary)] flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-4xl w-full bg-[var(--clr-bg-primary)] rounded-2xl shadow-lg p-8">
+        <h1 className="text-3xl font-bold text-[var(--clr-text-primary)] mb-6 text-center">
           Termos de Uso — TrampoMATCH
         </h1>
 
-        <div className="space-y-4 mt-4 text-gray-700">
+        <div className="space-y-4 mt-4 text-[var(--clr-text-primary)]">
           {termsSections.map((section) => (
-            <div key={section.id} className="border-b border-gray-200 last:border-b-0">
+            <div
+              key={section.id}
+              className="border-b border-[var(--clr-footer-border)] last:border-b-0"
+            >
               <button
                 onClick={() => toggleSection(section.id)}
-                className="w-full text-left flex justify-between items-center py-3 focus:outline-none"
+                className="w-full text-left flex justify-between items-center py-3 focus:outline-none bg-[var(--clr-bg-primary)] hover:bg-[var(--clr-bg-secondary)] transition-colors duration-200"
               >
-                <span className="text-lg font-semibold">{section.title}</span>
-                <span className="text-gray-500">
+                {" "}
+                <span className="text-lg font-semibold text-[var(--clr-text-primary)]">
+                  {section.title}
+                </span>
+                <span className="text-[var(--clr-text-secondary)]">
                   {openSections[section.id] ? "−" : "+"}
                 </span>
               </button>
               {openSections[section.id] && (
-                <div className="mt-2 text-gray-700 text-sm leading-relaxed">
+                <div className="mt-2 text-[var(--clr-text-secondary)] text-sm leading-relaxed p-2">
                   {section.content}
                 </div>
               )}
@@ -124,8 +130,11 @@ export default function Termsofuse() {
           ))}
         </div>
 
-        <div className="mt-10 flex items-center justify-between border-t pt-4">
-          <Link to="/" className="text-blue-600 hover:underline text-sm">
+        <div className="mt-10 flex items-center justify-between border-t border-[var(--clr-footer-border)] pt-4">
+          <Link
+            to="/"
+            className="text-[var(--clr-accent-secondary)] hover:underline text-sm"
+          >
             ← Voltar para o site
           </Link>
         </div>
@@ -134,7 +143,7 @@ export default function Termsofuse() {
       {showButton && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition duration-300"
+          className="fixed bottom-6 right-6 bg-[var(--clr-accent-primary)] text-[var(--clr-text-inverse)] px-4 py-2 rounded-full shadow-lg hover:bg-[var(--clr-accent-tertiary)] transition duration-300"
           aria-label="Voltar ao topo"
         >
           ↑ Topo

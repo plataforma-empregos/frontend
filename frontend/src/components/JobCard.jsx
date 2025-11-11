@@ -1,38 +1,33 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/JobCard.module.css";
 import {
   FaBullhorn,
   FaPaintBrush,
-  FaChartLine,
+  FaUserShield,
   FaCog,
   FaTags,
-  FaUsers,
+  FaNetworkWired,
   FaFileAlt,
   FaLaptopCode,
-  FaHeartbeat,
-  FaGavel,
-} from "react-icons/fa";
+  FaHeadset,
+  } from "react-icons/fa";
+import { FaDatabase } from "react-icons/fa6";
 
-export default function JobCard() {
-  const [selectedCategory, setSelectedCategory] = useState(null);
-
+export default function JobCard({ isAuthenticated, onAuthRequired }) {
   const categories = [
     { name: "Marketing", jobs: 85, icon: <FaBullhorn /> },
-    { name: "Design", jobs: 55, icon: <FaPaintBrush /> },
-    { name: "Finanças", jobs: 75, icon: <FaChartLine /> },
+    { name: "UX/UI Design", jobs: 55, icon: <FaPaintBrush /> },
+    { name: "Data Security", jobs: 75, icon: <FaUserShield /> },
     { name: "Engenharias", jobs: 158, icon: <FaCog /> },
     { name: "Vendas", jobs: 75, icon: <FaTags /> },
-    { name: "Recursos Humanos", jobs: 121, icon: <FaUsers /> },
+    { name: "Network Analyst", jobs: 121, icon: <FaNetworkWired /> },
     { name: "Administrativo", jobs: 96, icon: <FaFileAlt /> },
-    { name: "Tecnologia", jobs: 214, icon: <FaLaptopCode /> },
-    { name: "Saúde", jobs: 45, icon: <FaHeartbeat /> },
-    { name: "Jurídico", jobs: 29, icon: <FaGavel /> },
+    { name: "Developer", jobs: 214, icon: <FaLaptopCode /> },
+    { name: "Technical Support", jobs: 45, icon: <FaHeadset /> },
+    { name: "Database Administrator", jobs: 29, icon: <FaDatabase /> },
   ];
 
-  const handleMostrarTodas = () => {
-    setSelectedCategory(null);
-  };
+  const handleMostrarTodas = () => {};
 
   return (
     <div className={styles.categoryGrid}>
@@ -52,18 +47,25 @@ export default function JobCard() {
 
         <div className={styles.cardContainer}>
           {categories.map((cat, index) => (
-            <button
+            <Link
               key={`${cat.name}-${index}`}
-              className={`${styles.categoryCard} ${
-                selectedCategory === cat.name ? styles.selected : ""
-              }`}
-              onClick={() => setSelectedCategory(cat.name)}
-              aria-pressed={selectedCategory === cat.name}
+              to={`/vagas?query=${encodeURIComponent(cat.name)}`}
+              onClick={
+                !isAuthenticated
+                  ? (e) => {
+                      e.preventDefault();
+                      onAuthRequired();
+                    }
+                  : undefined
+              }
+              className={styles.categoryCard}
             >
               <div className={styles.cardIcon}>{cat.icon}</div>
               <h3>{cat.name}</h3>
-              <p>{cat.jobs} Vagas disponíveis</p>
-            </button>
+              <p>
+                {cat.jobs > 0 ? `${cat.jobs} Vagas disponíveis` : "Ver vagas"}
+              </p>
+            </Link>
           ))}
         </div>
 

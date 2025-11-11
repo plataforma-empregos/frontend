@@ -1,12 +1,44 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../styles/SearchBar.module.css";
 
-export default function SearchBar() {
-  const [keyword, setKeyword] = useState("");
-  const [location, setLocation] = useState("");
+export default function SearchBar({
+  initialKeyword = "",
+  initialLocation = "",
+  onCriteriaChange, 
+  onSearch,         
+}) {
 
-  const handleSearch = () => {
-    console.log("Buscando:", { keyword, location });
+  const [keyword, setKeyword] = useState(initialKeyword);
+  const [location, setLocation] = useState(initialLocation);
+
+  useEffect(() => {
+    setKeyword(initialKeyword);
+    setLocation(initialLocation);
+  }, [initialKeyword, initialLocation]);
+
+  const handleInputChange = (field, value) => {
+    let newKeyword = keyword;
+    let newLocation = location;
+
+    if (field === "keyword") {
+      newKeyword = value;
+      setKeyword(value);
+    } else if (field === "location") {
+      newLocation = value;
+      setLocation(value);
+    }
+
+    if (onCriteriaChange) {
+      onCriteriaChange({ keyword: newKeyword, location: newLocation });
+    }
+  };
+
+  const handleSearchClick = () => {
+    if (onSearch) {
+      onSearch({ keyword, location });
+    } else if (onCriteriaChange) {
+      onCriteriaChange({ keyword, location });
+    }
   };
 
   return (
@@ -15,9 +47,16 @@ export default function SearchBar() {
         type="text"
         placeholder="Nome da vaga ou palavra-chave"
         value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
+        onChange={(e) => handleInputChange("keyword", e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSearchClick()}
+        className={styles.searchInput}
       />
-      <select value={location} onChange={(e) => setLocation(e.target.value)}>
+
+      <select
+        value={location}
+        onChange={(e) => handleInputChange("location", e.target.value)}
+        className={styles.locationSelect}
+      >
         <option value="">Selecione a localização</option>
         <option value="Sao Paulo">São Paulo, Brasil</option>
         <option value="Rio de Janeiro">Rio de Janeiro, Brasil</option>
@@ -29,7 +68,12 @@ export default function SearchBar() {
         <option value="Pernambuco">Pernambuco, Brasil</option>
         <option value="Ceara">Ceará, Brasil</option>
       </select>
-      <button onClick={handleSearch} className={styles.searchButton}>
+
+      <button
+        type="button"
+        onClick={handleSearchClick}
+        className={styles.searchButton}
+      >
         Buscar Vaga
       </button>
     </div>

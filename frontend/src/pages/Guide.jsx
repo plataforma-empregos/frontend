@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react"; 
-import { Link } from "react-router-dom"; 
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-// Array de seções. Cada objeto representa uma seção com id, título e conteúdo
 const sections = [
   {
     id: 1,
@@ -41,71 +40,54 @@ const sections = [
   },
 ];
 
-// Componente principal da página de guia interativo
 export default function Guide() {
-  // Estado que controla se o botão "Voltar ao Topo" deve aparecer
   const [showButton, setShowButton] = useState(false);
-
-  // Estado que controla quais seções estão abertas (visíveis)
   const [openSections, setOpenSections] = useState({});
 
-  // useEffect é usado para executar código quando o componente é montado
   useEffect(() => {
-    // Rola a página para o topo ao abrir o guia
     window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // Função que verifica a posição de rolagem para mostrar/esconder o botão "Voltar ao Topo"
     const handleScroll = () => setShowButton(window.scrollY > 300);
-
-    // Adiciona um "ouvinte" de rolagem que dispara handleScroll sempre que o usuário rola a página
     window.addEventListener("scroll", handleScroll);
-
-    // Limpa o "ouvinte" quando o componente é desmontado para evitar problemas de performance
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Função para rolar a página de volta ao topo
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Função que alterna a visibilidade de uma seção (abre se estiver fechada e fecha se estiver aberta)
   const toggleSection = (id) => {
     setOpenSections((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 relative">
-      {/* Container principal da página */}
-      <div className="max-w-4xl w-full bg-white rounded-2xl shadow-lg p-8">
-        {/* Título do guia */}
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+    <div className="min-h-screen bg-[var(--clr-bg-secondary)] flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8 relative">
+      <div className="max-w-4xl w-full bg-[var(--clr-bg-primary)] rounded-2xl shadow-lg p-8">
+        <h1 className="text-3xl font-bold text-[var(--clr-text-primary)] mb-6 text-center">
           Guia Interativo
         </h1>
 
-        {/* Área que exibe todas as seções do guia */}
-        <div className="space-y-4 mt-4 text-gray-700">
+        <div className="space-y-4 mt-4 text-[var(--clr-text-primary)]">
           {sections.map((section) => (
             <div
               key={section.id}
-              className="border-b border-gray-200 last:border-b-0"
+              className="border-b border-[var(--clr-footer-border)] last:border-b-0"
             >
-              {/* Botão que permite abrir ou fechar cada seção */}
               <button
                 onClick={() => toggleSection(section.id)}
-                className="w-full text-left flex justify-between items-center py-3 focus:outline-none"
+                className="w-full text-left flex justify-between items-center py-3 focus:outline-none 
+                           bg-[var(--clr-bg-primary)] hover:bg-[var(--clr-bg-secondary)]
+                           transition-colors duration-200"
               >
-                {/* Título da seção */}
-                <span className="text-lg font-semibold">{section.title}</span>
-                {/* Sinal + ou − para indicar se a seção está aberta ou fechada */}
-                <span className="text-gray-500">
+                <span className="text-lg font-semibold text-[var(--clr-text-primary)]">
+                  {section.title}
+                </span>
+                <span className="text-[var(--clr-text-secondary)]">
                   {openSections[section.id] ? "−" : "+"}
                 </span>
               </button>
 
-              {/* Conteúdo da seção, só aparece se a seção estiver aberta */}
               {openSections[section.id] && (
-                <div className="mt-2 text-gray-700 text-sm leading-relaxed">
+                <div className="mt-2 text-[var(--clr-text-secondary)] text-sm leading-relaxed p-2">
                   {section.content}
                 </div>
               )}
@@ -113,19 +95,20 @@ export default function Guide() {
           ))}
         </div>
 
-        {/* Link para voltar à página inicial */}
-        <div className="mt-10 flex items-center justify-between border-t pt-4">
-          <Link to="/" className="text-blue-600 hover:underline text-sm">
+        <div className="mt-10 flex items-center justify-between border-t border-[var(--clr-footer-border)] pt-4">
+          <Link
+            to="/"
+            className="text-[var(--clr-accent-secondary)] hover:underline text-sm"
+          >
             ← Voltar para o site
           </Link>
         </div>
       </div>
 
-      {/* Botão "Voltar ao Topo", aparece apenas quando showButton é true */}
       {showButton && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg hover:bg-blue-700 transition duration-300"
+          className="fixed bottom-6 right-6 bg-[var(--clr-accent-primary)] text-[var(--clr-text-inverse)] px-4 py-2 rounded-full shadow-lg hover:bg-[var(--clr-accent-tertiary)] transition duration-300"
           aria-label="Voltar ao topo"
         >
           ↑ Topo
