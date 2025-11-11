@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { sendContactMessage } from "../services/api";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -22,11 +23,16 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Dados do formulário:", form);
-    alert("Mensagem enviada com sucesso! Entraremos em contato em breve.");
-    setForm({ name: "", email: "", subject: "", message: "", consent: false });
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+
+    try {
+      await sendContactMessage(form);
+      alert("Mensagem enviada com sucesso! Entraremos em contato em breve.");
+      setForm({ name: "", email: "", subject: "", message: "", consent: false });
+    } catch (error) {
+      alert("Erro ao enviar mensagem. Tente novamente mais tarde.");
+    }
   };
 
   return (
