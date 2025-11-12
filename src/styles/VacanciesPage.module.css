@@ -1,0 +1,40 @@
+.pageContainer {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--clr-text-primary);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.searchBarContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.jobListContainer {
+  margin-top: 2rem;
+  border: 1px solid var(--clr-border-light, #eee);
+  border-radius: 8px;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow: hidden;
+  background-color: var(--clr-bg-primary);
+}
+
+/* Adaptação para tema escuro */
+html[data-theme="dark"] .jobListContainer {
+  border-color: var(--clr-border-dark, #333);
+}
+
+.noResults {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--clr-text-secondary);
+}

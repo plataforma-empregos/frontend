@@ -1,0 +1,214 @@
+.header {
+  width: 100%;
+  background-color: var(--clr-bg-primary);
+  border-bottom: 1px solid #eaeaea;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.navLinks,
+.authLinks {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinks a,
+.authLinks a {
+  text-decoration: none;
+  color: var(--clr-text-primary);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.navLinks a:hover,
+.authLinks a:hover {
+  color: var(--clr-accent-secondary);
+}
+
+.navList {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navList a,
+.navList button {
+  text-decoration: none;
+  color: var(--clr-text-primary);
+  font-weight: 500;
+  white-space: nowrap;
+  font-size: 0.95rem;
+  font-family: "Poppins", sans-serif;
+  transition: color 0.3s ease, background-color 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.navList a:hover {
+  color: var(--clr-accent-secondary);
+}
+
+.navList .signupButton {
+  background: var(--clr-accent-primary);
+  color: var(--clr-text-inverse) !important;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.navList .signupButton:hover {
+  background-color: var(--clr-accent-tertiary);
+  color: var(--clr-text-inverse) !important;
+}
+
+.navList a.signupButton:hover {
+  color: var(--clr-text-inverse) !important;
+}
+
+.profileButton {
+  background-color: var(--clr-text-muted);
+  color: var(--clr-text-inverse) !important;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+.profileButton:hover {
+  background-color: var(--clr-text-secondary);
+  color: var(--clr-text-inverse) !important;
+}
+
+.navList .logoutButton {
+  background-color: var(--clr-danger-primary);
+  color: var(--clr-text-inverse) !important;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.navList .logoutButton:hover {
+  background-color: var(--clr-danger-secondary);
+  color: var(--clr-text-inverse) !important;
+}
+
+.navList button.logoutButton:hover {
+  color: var(--clr-text-inverse) !important;
+}
+
+.hamburgerButton,
+.navMobile {
+  display: none;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .navDesktop {
+    display: none;
+  }
+
+  .hamburgerButton {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--clr-text-primary);
+  }
+
+  .navMobile {
+    display: flex;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--clr-bg-primary);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+  }
+
+  .navLinksMobile {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .navLinksMobile a,
+  .navLinksMobile button {
+    text-decoration: none;
+    color: var(--clr-text-primary);
+    font-weight: 500;
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1rem;
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+
+  .navLinksMobile a:hover,
+  .navLinksMobile button:hover {
+    color: var(--clr-accent-secondary);
+  }
+
+  .signupButtonMobile {
+    background-color: var(--clr-accent-primary) !important;
+    color: var(--clr-text-inverse) !important;
+    padding: 0.75rem 1rem !important;
+    border-radius: 6px;
+    font-weight: 600;
+    text-align: center !important;
+  }
+  .signupButtonMobile:hover {
+    background-color: var(--clr-accent-tertiary) !important;
+    color: var(--clr-text-inverse) !important;
+  }
+
+  .logoutButtonMobile {
+    color: var(--clr-danger-primary) !important;
+    font-weight: 600;
+  }
+  .logoutButtonMobile:hover {
+    color: var(--clr-danger-secondary) !important;
+  }
+}
