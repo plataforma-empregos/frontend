@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/api", // ajustar se o backend usar outra porta
+  baseURL: "http://localhost:3000/api",
+
+  withCredentials: true,
 });
 
 // Enviar mensagem de contato
