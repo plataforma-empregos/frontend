@@ -10,7 +10,7 @@ import {
   FaFileAlt,
   FaLaptopCode,
   FaHeadset,
-  } from "react-icons/fa";
+} from "react-icons/fa";
 import { FaDatabase } from "react-icons/fa6";
 
 export default function JobCard({ isAuthenticated, onAuthRequired }) {
@@ -27,8 +27,6 @@ export default function JobCard({ isAuthenticated, onAuthRequired }) {
     { name: "Database Administrator", jobs: 29, icon: <FaDatabase /> },
   ];
 
-  const handleMostrarTodas = () => {};
-
   return (
     <div className={styles.categoryGrid}>
       <div className={styles.container}>
@@ -36,10 +34,18 @@ export default function JobCard({ isAuthenticated, onAuthRequired }) {
           <h2 className={styles.categoryTitle}>
             Explore por <span>categorias</span>
           </h2>
+
           <Link
-            to="/vagas"
+            to="/vacancies"
             className={`${styles.showAllButton} ${styles.showAllButtonDesktop}`}
-            onClick={handleMostrarTodas}
+            onClick={
+              !isAuthenticated
+                ? (e) => {
+                    e.preventDefault();
+                    onAuthRequired();
+                  }
+                : undefined
+            }
           >
             Mostrar Todas as Vagas
           </Link>
@@ -49,7 +55,7 @@ export default function JobCard({ isAuthenticated, onAuthRequired }) {
           {categories.map((cat, index) => (
             <Link
               key={`${cat.name}-${index}`}
-              to={`/vagas?query=${encodeURIComponent(cat.name)}`}
+              to={`/vacancies?query=${encodeURIComponent(cat.name)}`}
               onClick={
                 !isAuthenticated
                   ? (e) => {
@@ -71,9 +77,16 @@ export default function JobCard({ isAuthenticated, onAuthRequired }) {
 
         <div className={styles.showAllContainerMobile}>
           <Link
-            to="/vagas"
+            to="/vacancies"
             className={styles.showAllButton}
-            onClick={handleMostrarTodas}
+            onClick={
+              !isAuthenticated
+                ? (e) => {
+                    e.preventDefault();
+                    onAuthRequired();
+                  }
+                : undefined
+            }
           >
             Mostrar Todas as Vagas
           </Link>

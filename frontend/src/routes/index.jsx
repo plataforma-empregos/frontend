@@ -1,5 +1,6 @@
 import HomePage from "../pages/HomePage";
 import CompaniesPage from "../pages/CompaniesPage";
+import CompaniesDetailsPage from "../pages/CompaniesDetailsPage";
 import VacanciesPage from "../pages/VacanciesPage";
 import JobDetailsPage from "../pages/JobDetailsPage";
 import ProfilePage from "../pages/ProfilePage";
@@ -20,6 +21,11 @@ export const routes = [
   { path: "/", breadcrumb: "Início", element: <HomePage /> },
   { path: "/companies", breadcrumb: "Empresas", element: <CompaniesPage /> },
   { path: "/vacancies", breadcrumb: "Vagas", element: <VacanciesPage /> },
+  {
+    path: "/companies/:slug",
+    breadcrumb: "Detalhes da Empresa",
+    element: <CompaniesDetailsPage />,
+  },
   {
     path: "/vagas/:jobId",
     breadcrumb: "Detalhes da Vaga",
