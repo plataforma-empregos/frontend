@@ -33,7 +33,6 @@ export default function HomePage() {
         isAuthenticated={isAuthenticated}
         onAuthRequired={openLoginPrompt}
       />
-
       <LoginPromptModal
         isOpen={showLoginPrompt}
         onRequestClose={closeLoginPrompt}

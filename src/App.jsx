@@ -4,9 +4,7 @@ import { Toaster } from "react-hot-toast";
 // Layouts
 import MainLayout from "./layouts/MainLayout";
 import AuthLayout from "./layouts/AuthLayout";
-
 import ScrollToTop from "./components/ScrollToTop";
-
 import { routes } from "./routes";
 
 function App() {
