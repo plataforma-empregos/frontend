@@ -64,7 +64,6 @@ export default function Header() {
               <Link to="/companies">Buscar Empresas</Link>
             </li>
 
-            {/* Opções exibidas de acordo com o estado de autenticação */}
             {isAuthenticated ? (
               <>
                 <li>
