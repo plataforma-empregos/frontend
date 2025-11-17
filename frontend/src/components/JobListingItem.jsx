@@ -1,7 +1,9 @@
 import styles from "../styles/JobListingItem.module.css";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 export default function JobListingItem({ job }) {
+  const [searchParams] = useSearchParams();
+
   return (
     <div className={styles.jobItem}>
       <img
@@ -17,7 +19,10 @@ export default function JobListingItem({ job }) {
         </p>
       </div>
       <div className={styles.actions}>
-        <Link to={`/vagas/${job.id}`} className={styles.detailsButton}>
+        <Link
+          to={`/vagas/${job.id}?${searchParams.toString()}`}
+          className={styles.detailsButton}
+        >
           Ver Detalhes
         </Link>
       </div>
