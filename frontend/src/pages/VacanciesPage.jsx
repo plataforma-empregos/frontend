@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import JobListingItem from "../components/JobListingItem";
@@ -13,6 +13,8 @@ export default function VacanciesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const lastQueryRef = useRef("");
+
   const keyword = searchParams.get("keyword") || "";
   const location = searchParams.get("location") || "";
 
@@ -22,6 +24,12 @@ export default function VacanciesPage() {
       setFilteredJobs([]);
       return;
     }
+
+    const currentQuery = `${keyword}-${location}`.trim();
+
+    // Evita requisições duplicadas!
+    if (lastQueryRef.current === currentQuery) return;
+    lastQueryRef.current = currentQuery;
 
     const fetchJobs = async () => {
       setIsLoading(true);

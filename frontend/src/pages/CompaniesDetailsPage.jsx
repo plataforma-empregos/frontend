@@ -20,36 +20,47 @@ const CompanyDetailsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const companyNameFromSlug = slug.replace(/-/g, " ");
+
   useEffect(() => {
     const fetchCompanyData = async () => {
       setIsLoading(true);
+
       try {
         const response = await api.get("/external-jobs", {
-          params: { keyword: slug.replace(/-/g, " "), limit: 50 },
+          params: {
+            keyword: companyNameFromSlug,
+            limit: 100,
+          },
         });
 
         const allJobs = response.data?.data || [];
 
-        const firstJobOfCompany = allJobs.find(
+        if (allJobs.length === 0) {
+          throw new Error("Nenhuma vaga encontrada");
+        }
+
+        const firstJob = allJobs.find(
           (job) => generateSlug(job.company) === slug
         );
 
-        if (!firstJobOfCompany) {
+        if (!firstJob) {
           throw new Error("Empresa não encontrada");
         }
 
-        setCompanyDetails({
-          name: firstJobOfCompany.company,
-          location: firstJobOfCompany.cityState,
-          imageUrl: firstJobOfCompany.imageUrl,
+        const details = {
+          name: firstJob.company,
+          location: firstJob.cityState,
+          imageUrl: firstJob.imageUrl,
+          description: firstJob.description || "Nenhuma descrição disponível.",
+        };
 
-          description:
-            firstJobOfCompany.description || "Nenhuma descrição disponível.",
-        });
+        setCompanyDetails(details);
 
         const filteredJobs = allJobs.filter(
-          (job) => job.company === firstJobOfCompany.company
+          (job) => job.company === details.name
         );
+
         setJobsFromThisCompany(filteredJobs);
       } catch (err) {
         console.error("Erro ao buscar detalhes da empresa:", err);
@@ -60,11 +71,11 @@ const CompanyDetailsPage = () => {
     };
 
     fetchCompanyData();
-  }, [slug]);
+  }, [slug, companyNameFromSlug]);
 
   if (isLoading) {
     return (
-      <div className={styles.pageContainer}>
+      <div className={styles.LoadingErrorContainer}>
         <p className={styles.loadingMessage}>Carregando...</p>
       </div>
     );
@@ -72,10 +83,10 @@ const CompanyDetailsPage = () => {
 
   if (error || !companyDetails) {
     return (
-      <div className={styles.pageContainer}>
+      <div className={styles.LoadingErrorContainer}>
         <h1 className={styles.pageTitle}>Empresa não encontrada</h1>
         <p className={styles.pageSubtitle}>
-          O link que você tentou acessar não existe.
+          Não conseguimos encontrar informações sobre esta empresa.
         </p>
         <Link to="/companies" className={styles.backLink}>
           &larr; Voltar para a lista de empresas
@@ -96,26 +107,31 @@ const CompanyDetailsPage = () => {
           alt={`${companyDetails.name} logo`}
           className={styles.companyLogo}
         />
+
         <div className={styles.companyInfo}>
           <h1 className={styles.companyName}>{companyDetails.name}</h1>
           <p className={styles.companyLocation}>{companyDetails.location}</p>
         </div>
-
-        <p className={styles.companyDescription}>
-          {companyDetails.description}
-        </p>
       </header>
+
+      <p className={styles.companyDescription}>{companyDetails.description}</p>
 
       <section className={styles.jobsSection}>
         <h2 className={styles.jobsTitle}>
-          Vagas Abertas em {companyDetails.name}
+          Vagas abertas em {companyDetails.name}
         </h2>
 
-        <div className={styles.jobsList}>
-          {jobsFromThisCompany.map((job) => (
-            <JobListingItem key={job.id} job={job} />
-          ))}
-        </div>
+        {jobsFromThisCompany.length === 0 ? (
+          <p className={styles.noJobs}>
+            Nenhuma vaga encontrada para esta empresa no momento.
+          </p>
+        ) : (
+          <div className={styles.jobsList}>
+            {jobsFromThisCompany.map((job) => (
+              <JobListingItem key={job.id} job={job} />
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

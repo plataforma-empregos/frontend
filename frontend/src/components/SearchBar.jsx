@@ -10,8 +10,8 @@ export default function SearchBar({
   const [location, setLocation] = useState(initialLocation);
 
   useEffect(() => {
-    setKeyword(initialKeyword);
-    setLocation(initialLocation);
+    if (keyword !== initialKeyword) setKeyword(initialKeyword);
+    if (location !== initialLocation) setLocation(initialLocation);
   }, [initialKeyword, initialLocation]);
 
   const handleSearchSubmit = (event) => {

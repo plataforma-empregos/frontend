@@ -6,31 +6,46 @@ import toast from "react-hot-toast";
 import TermsModal from "../components/TermsModal";
 import Logo from "../components/Logo";
 
+import api from "../services/api";
+
 export default function Register() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+
   const { login } = useAuth();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+
+    formState: { errors, isSubmitting },
     watch,
   } = useForm({ mode: "onBlur" });
 
   const password = watch("password");
 
   const onSubmit = async (data) => {
-    console.log("Dados do registro válidos:", data);
+    try {
+      const response = await api.post("/auth/register", {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+      });
 
-    const newUser = {
-      name: data.name,
-      email: data.email,
-    };
-    login(newUser);
+      const userData = response.data.user;
 
-    toast.success("Conta criada com sucesso!");
-    navigate("/");
+      login(userData);
+
+      toast.success("Conta criada com sucesso!");
+      navigate("/");
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.error) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Erro ao criar a conta. Tente novamente.");
+      }
+      console.error("Erro no registro:", error);
+    }
   };
 
   const openModal = () => setIsModalOpen(true);
@@ -161,9 +176,10 @@ export default function Register() {
 
           <button
             type="submit"
-            className="w-full bg-[#0069A8] dark:bg-sky-600 text-white p-2 rounded-lg hover:bg-[#005080] dark:hover:bg-sky-500 transition"
+            disabled={isSubmitting}
+            className="w-full bg-[#0069A8] dark:bg-sky-600 text-white p-2 rounded-lg hover:bg-[#005080] dark:hover:bg-sky-500 transition disabled:opacity-50"
           >
-            Cadastrar-se
+            {isSubmitting ? "Criando conta..." : "Cadastrar-se"}
           </button>
         </form>
 
