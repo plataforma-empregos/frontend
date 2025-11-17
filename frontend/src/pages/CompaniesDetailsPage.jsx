@@ -113,6 +113,7 @@ const CompanyDetailsPage = () => {
 
         <div className={styles.jobsList}>
           {jobsFromThisCompany.map((job) => (
+            // Reutiliza o JobListingItem
             <JobListingItem key={job.id} job={job} />
           ))}
         </div>
