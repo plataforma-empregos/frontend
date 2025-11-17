@@ -65,7 +65,7 @@ const CompanyDetailsPage = () => {
   if (isLoading) {
     return (
       <div className={styles.pageContainer}>
-        <h1 className={styles.pageTitle}>Carregando...</h1>
+        <p className={styles.loadingMessage}>Carregando...</p>
       </div>
     );
   }

@@ -81,7 +81,7 @@ export default function CompaniesPage() {
   if (isLoading) {
     return (
       <div className={styles.pageContainer}>
-        <h1 className={styles.pageTitle}>Buscando Empresas...</h1>
+        <p className={styles.loadingMessage}>Buscando Empresas...</p>
       </div>
     );
   }
