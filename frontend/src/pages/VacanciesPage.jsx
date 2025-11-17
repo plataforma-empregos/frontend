@@ -1,82 +1,60 @@
 import { useState, useEffect } from "react";
-import {
-  useSearchParams,
-  useLocation,
-  useNavigate,
-  Link,
-} from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { mockJobs } from "../data/mockJobs";
 import JobListingItem from "../components/JobListingItem";
 import SearchBar from "../components/SearchBar";
 import styles from "../styles/VacanciesPage.module.css";
-import { useDebounce } from "use-debounce";
+import api from "../services/api";
+import toast from "react-hot-toast";
 
 export default function VacanciesPage() {
   const { isAuthenticated } = useAuth();
-  const [allJobs] = useState(mockJobs);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [immediateKeyword, setImmediateKeyword] = useState(
-    searchParams.get("keyword") || ""
-  );
-  const [immediateLocation, setImmediateLocation] = useState(
-    searchParams.get("location") || ""
-  );
-
-  const [debouncedKeyword] = useDebounce(immediateKeyword, 500);
-  const [debouncedLocation] = useDebounce(immediateLocation, 500);
+  const keyword = searchParams.get("keyword") || "";
+  const location = searchParams.get("location") || "";
 
   useEffect(() => {
-    setIsLoading(true);
-    console.log("Filtering with:", {
-      keyword: debouncedKeyword,
-      location: debouncedLocation,
-    });
-
-    const lowerKeyword = debouncedKeyword.toLowerCase();
-
-    const results = allJobs.filter((job) => {
-      const matchKeyword = lowerKeyword
-        ? job.title.toLowerCase().includes(lowerKeyword) ||
-          job.company.toLowerCase().includes(lowerKeyword) ||
-          (job.description &&
-            job.description.toLowerCase().includes(lowerKeyword))
-        : true;
-      const matchLocation = debouncedLocation
-        ? job.location === debouncedLocation
-        : true;
-      return matchKeyword && matchLocation;
-    });
-
-    const timer = setTimeout(() => {
-      setFilteredJobs(results);
+    if (!keyword) {
       setIsLoading(false);
-    }, 150);
+      setFilteredJobs([]);
+      return;
+    }
 
-    const newSearchParams = new URLSearchParams();
-    if (debouncedKeyword) newSearchParams.set("keyword", debouncedKeyword);
-    if (debouncedLocation) newSearchParams.set("location", debouncedLocation);
-    navigate(`${location.pathname}?${newSearchParams.toString()}`, {
-      replace: true,
-    });
+    const fetchJobs = async () => {
+      setIsLoading(true);
+      try {
+        const response = await api.get("/external-jobs", {
+          params: {
+            keyword: keyword,
+            location: location,
+          },
+        });
 
-    return () => clearTimeout(timer);
-  }, [
-    debouncedKeyword,
-    debouncedLocation,
-    allJobs,
-    navigate,
-    location.pathname,
-  ]);
+        const jobsData = response.data?.data || [];
+
+        setFilteredJobs(jobsData);
+      } catch (error) {
+        console.error("Erro ao buscar vagas (JSearch):", error);
+        toast.error(
+          "Erro ao buscar vagas. Você pode ter atingido o limite de buscas. Tente mais tarde."
+        );
+        setFilteredJobs([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, [keyword, location]);
 
   const handleCriteriaChange = (criteria) => {
-    setImmediateKeyword(criteria.keyword);
-    setImmediateLocation(criteria.location);
+    setSearchParams(
+      { keyword: criteria.keyword, location: criteria.location },
+      { replace: true }
+    );
   };
 
   const displayLimit = 5;
@@ -91,9 +69,10 @@ export default function VacanciesPage() {
 
       <div className={styles.searchBarContainer}>
         <SearchBar
-          initialKeyword={immediateKeyword}
-          initialLocation={immediateLocation}
-          onCriteriaChange={handleCriteriaChange}
+          initialKeyword={keyword}
+          initialLocation={location}
+          onSearch={handleCriteriaChange}
+          searchNavigate={null}
         />
       </div>
 
@@ -120,13 +99,16 @@ export default function VacanciesPage() {
 
       <div className={styles.jobListContainer}>
         {isLoading ? (
-          <p className={styles.loadingMessage}>Filtrando vagas...</p>
+          <p className={styles.loadingMessage}>Buscando vagas...</p>
         ) : jobsToShow.length > 0 ? (
           jobsToShow.map((job) => <JobListingItem key={job.id} job={job} />)
         ) : (
           <p className={styles.noResults}>
-            Nenhuma vaga encontrada para "{immediateKeyword}"{" "}
-            {immediateLocation && `em ${immediateLocation}`}.
+            {keyword
+              ? `Nenhuma vaga encontrada para "${keyword}" ${
+                  location ? `em ${location}` : ""
+                }.`
+              : "Digite um termo para iniciar a busca."}
           </p>
         )}
       </div>

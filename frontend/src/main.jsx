@@ -8,7 +8,6 @@ import "./index.css";
 
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
-console.log("GOOGLE CLIENT ID:", googleClientId);
 if (!googleClientId) {
   console.error("Variável VITE_GOOGLE_CLIENT_ID não está definida.");
 }

@@ -10,24 +10,29 @@ import {
   FaFileAlt,
   FaLaptopCode,
   FaHeadset,
-  } from "react-icons/fa";
+} from "react-icons/fa";
 import { FaDatabase } from "react-icons/fa6";
 
 export default function JobCard({ isAuthenticated, onAuthRequired }) {
   const categories = [
-    { name: "Marketing", jobs: 85, icon: <FaBullhorn /> },
-    { name: "UX/UI Design", jobs: 55, icon: <FaPaintBrush /> },
-    { name: "Data Security", jobs: 75, icon: <FaUserShield /> },
-    { name: "Engenharias", jobs: 158, icon: <FaCog /> },
-    { name: "Vendas", jobs: 75, icon: <FaTags /> },
-    { name: "Network Analyst", jobs: 121, icon: <FaNetworkWired /> },
-    { name: "Administrativo", jobs: 96, icon: <FaFileAlt /> },
-    { name: "Developer", jobs: 214, icon: <FaLaptopCode /> },
-    { name: "Technical Support", jobs: 45, icon: <FaHeadset /> },
-    { name: "Database Administrator", jobs: 29, icon: <FaDatabase /> },
+    { name: "Marketing", icon: <FaBullhorn /> },
+    { name: "UX/UI Design", icon: <FaPaintBrush /> },
+    { name: "Data Security", icon: <FaUserShield /> },
+    { name: "Engenharias", icon: <FaCog /> },
+    { name: "Vendas", icon: <FaTags /> },
+    { name: "Network Analyst", icon: <FaNetworkWired /> },
+    { name: "Administrativo", icon: <FaFileAlt /> },
+    { name: "Developer", icon: <FaLaptopCode /> },
+    { name: "Technical Support", icon: <FaHeadset /> },
+    { name: "Database Administrator", icon: <FaDatabase /> },
   ];
 
-  const handleMostrarTodas = () => {};
+  const handleShowAllClick = (e) => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      onAuthRequired();
+    }
+  };
 
   return (
     <div className={styles.categoryGrid}>
@@ -36,10 +41,11 @@ export default function JobCard({ isAuthenticated, onAuthRequired }) {
           <h2 className={styles.categoryTitle}>
             Explore por <span>categorias</span>
           </h2>
+
           <Link
-            to="/vagas"
+            to="/vacancies"
             className={`${styles.showAllButton} ${styles.showAllButtonDesktop}`}
-            onClick={handleMostrarTodas}
+            onClick={handleShowAllClick}
           >
             Mostrar Todas as Vagas
           </Link>
@@ -49,7 +55,7 @@ export default function JobCard({ isAuthenticated, onAuthRequired }) {
           {categories.map((cat, index) => (
             <Link
               key={`${cat.name}-${index}`}
-              to={`/vagas?query=${encodeURIComponent(cat.name)}`}
+              to={`/vacancies?keyword=${encodeURIComponent(cat.name)}`}
               onClick={
                 !isAuthenticated
                   ? (e) => {
@@ -71,9 +77,9 @@ export default function JobCard({ isAuthenticated, onAuthRequired }) {
 
         <div className={styles.showAllContainerMobile}>
           <Link
-            to="/vagas"
+            to="/vacancies"
             className={styles.showAllButton}
-            onClick={handleMostrarTodas}
+            onClick={handleShowAllClick}
           >
             Mostrar Todas as Vagas
           </Link>

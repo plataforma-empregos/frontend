@@ -19,7 +19,6 @@ export default function Login() {
     mode: "onBlur",
   });
 
-  // nova função 'login' do nosso AuthContext refatorado
   const { login } = useAuth();
   const navigate = useNavigate();
 
@@ -27,8 +26,7 @@ export default function Login() {
     try {
       const response = await api.post("/auth/login", data);
 
-      // retornar os dados do usuário no corpo da resposta
-      const userData = response.data.user; // ajustar o .user se o back retornar outro nome - eduardo)
+      const userData = response.data.user;
 
       login(userData);
 
@@ -40,9 +38,7 @@ export default function Login() {
     }
   };
 
-  //Login do Google
   const handleGoogleSuccess = async (credentialResponse) => {
-    // O 'credentialResponse' está armazenando o token JWT do Google
     const googleIdToken = credentialResponse.credential;
 
     try {
@@ -105,7 +101,7 @@ export default function Login() {
                 placeholder="********"
                 {...register("password", {
                   required: "A senha é obrigatória.",
-                  minLength: { value: 8, message: "Mínimo 8 caracteres." },
+                  minLength: { value: 6, message: "Mínimo 6 caracteres." },
                 })}
               />
 
