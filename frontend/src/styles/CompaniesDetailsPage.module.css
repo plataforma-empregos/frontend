@@ -79,6 +79,14 @@
   gap: 1rem;
 }
 
+.loadingMessage {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--clr-text-secondary);
+  font-weight: normal;
+  font-size: 1rem;
+}
+
 /*media queries*/
 
 @media (max-width: 768px) {
