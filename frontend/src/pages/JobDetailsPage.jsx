@@ -1,6 +1,37 @@
-import { useParams, Link } from "react-router-dom";
-import { mockJobs } from "../data/mockJobs";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import api from "../services/api";
+
+const ReadMore = ({ children }) => {
+  const text = children;
+  const [isReadMore, setIsReadMore] = useState(true);
+
+  if (!text) {
+    return (
+      <p className="text-[var(--clr-text-secondary)] whitespace-pre-line">
+        Nenhuma descrição fornecida.
+      </p>
+    );
+  }
+
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
+
+  return (
+    <p className="text-[var(--clr-text-secondary)] whitespace-pre-line">
+      {isReadMore ? text.slice(0, 350) : text}
+      {text.length > 350 && (
+        <span
+          onClick={toggleReadMore}
+          className="text-blue-600 cursor-pointer ml-2 font-semibold"
+        >
+          {isReadMore ? "...Ver mais" : " Ver menos"}
+        </span>
+      )}
+    </p>
+  );
+};
 
 export default function JobDetailsPage() {
   const { jobId } = useParams();
@@ -8,36 +39,71 @@ export default function JobDetailsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    setLoading(true);
+  const [searchParams] = useSearchParams();
 
-    const foundJob = mockJobs.find((j) => j.id === jobId);
-    if (foundJob) {
-      setJob(foundJob);
-    } else {
-      setError("Vaga não encontrada.");
-    }
-    setLoading(false);
+  useEffect(() => {
+    const fetchDetails = async () => {
+      setLoading(true);
+      try {
+        const response = await api.get(`/external-jobs/${jobId}`);
+
+        const jobData = response.data;
+        if (!jobData || !jobData.job_title) {
+          throw new Error("Dados da vaga não encontrados");
+        }
+
+        setJob({
+          title: jobData.job_title,
+          company: jobData.employer_name,
+          imageUrl: jobData.employer_logo || "https://via.placeholder.com/60",
+          cityState: jobData.job_city || jobData.job_country || "Remoto",
+          type: jobData.job_employment_type || "Não informado",
+          description: jobData.job_description,
+          applyLink: jobData.job_apply_link,
+        });
+      } catch (err) {
+        console.error("Erro ao buscar detalhes da vaga:", err);
+        setError("Vaga não encontrada.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDetails();
   }, [jobId]);
 
   if (loading)
     return <p className="text-center p-10">Carregando detalhes da vaga...</p>;
+
   if (error)
-    return <p className="text-center p-10 text-red-500">Erro: {error}</p>;
+    return (
+      <div className="text-center p-10">
+        <p className="text-red-500 mb-4">{error}</p>
+
+        <Link
+          to={`/vacancies?${searchParams.toString()}`}
+          className="text-blue-600 hover:underline"
+        >
+          &larr; Voltar para Vagas
+        </Link>
+      </div>
+    );
+
   if (!job) return <p className="text-center p-10">Vaga não encontrada.</p>;
 
   return (
     <div className="container mx-auto p-6 max-w-3xl">
       <Link
-        to="/vacancies"
+        to={`/vacancies?${searchParams.toString()}`}
         className="text-blue-600 hover:underline mb-4 inline-block"
       >
         &larr; Voltar para Vagas
       </Link>
+
       <div className="bg-[var(--clr-bg-primary)] p-8 rounded-lg shadow-md">
         <div className="flex items-center mb-4">
           <img
-            src={job.imageUrl || "https://picsum.photos/seed/placeholder/60/60"}
+            src={job.imageUrl}
             alt={`${job.company} logo`}
             className="w-16 h-16 mr-4 rounded"
           />
@@ -53,21 +119,23 @@ export default function JobDetailsPage() {
             </p>
           </div>
         </div>
+
         <h2 className="text-xl font-semibold mt-6 mb-2 text-[var(--clr-text-primary)]">
           Descrição da Vaga
         </h2>
-        <p className="text-[var(--clr-text-secondary)] whitespace-pre-line">
-          {job.description || "Nenhuma descrição fornecida."}
-        </p>
 
-        <a
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-6 inline-block bg-[var(--clr-accent-primary)] text-[var(--clr-text-inverse)] px-6 py-2 rounded hover:bg-[var(--clr-accent-tertiary)] transition"
-        >
-          Candidatar-se
-        </a>
+        <ReadMore>{job.description}</ReadMore>
+
+        {job.applyLink && (
+          <a
+            href={job.applyLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-block bg-[var(--clr-accent-primary)] text-[var(--clr-text-inverse)] px-6 py-2 rounded hover:bg-[var(--clr-accent-tertiary)] transition"
+          >
+            Candidatar-se
+          </a>
+        )}
       </div>
     </div>
   );
