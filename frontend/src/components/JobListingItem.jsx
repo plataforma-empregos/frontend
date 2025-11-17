@@ -20,7 +20,7 @@ export default function JobListingItem({ job }) {
       </div>
       <div className={styles.actions}>
         <Link
-          to={`/vagas/${job.id}?${searchParams.toString()}`}
+          to={`/vagas/${encodeURIComponent(job.id)}?${searchParams.toString()}`}
           className={styles.detailsButton}
         >
           Ver Detalhes

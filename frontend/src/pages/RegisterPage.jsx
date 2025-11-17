@@ -60,8 +60,9 @@ export default function Register() {
         <h2 className="text-lg font-semibold text-center mb-4 text-[var(--clr-text-primary)]">
           Criar uma nova conta
         </h2>
-
+      
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+     
           <div>
             <label className="block text-[var(--clr-text-primary)] text-left">
               Nome
@@ -76,7 +77,7 @@ export default function Register() {
               <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
             )}
           </div>
-
+       
           <div>
             <label className="block text-[var(--clr-text-primary)] text-left">
               Endereço de E-mail
@@ -144,6 +145,7 @@ export default function Register() {
             )}
           </div>
 
+        
           <div className="flex items-start">
             <input
               id="terms"
@@ -174,6 +176,7 @@ export default function Register() {
             </p>
           )}
 
+       
           <button
             type="submit"
             disabled={isSubmitting}
