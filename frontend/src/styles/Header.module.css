@@ -76,7 +76,8 @@
   padding: 0;
 }
 
-.navList a:hover {
+.navList a:hover,
+.navList button:hover {
   color: var(--clr-accent-secondary);
 }
 
