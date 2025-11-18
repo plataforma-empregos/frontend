@@ -1,4 +1,4 @@
-/* src/pages/RegisterPage.jsx (REFATORADO) */
+
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,52 +8,39 @@ import toast from "react-hot-toast";
 import TermsModal from "../components/TermsModal";
 import Logo from "../components/Logo";
 
-// 1. Importamos nossa instância 'api'
 import api from "../services/api";
 
 export default function Register() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
-  // 2. Pegamos a função 'login' do nosso AuthContext (que usa cookies)
   const { login } = useAuth();
 
   const {
     register,
     handleSubmit,
-    // 3. Usamos 'isSubmitting' para o estado de loading do botão
+
     formState: { errors, isSubmitting },
     watch,
   } = useForm({ mode: "onBlur" });
 
   const password = watch("password");
 
-  // ---
-  // 4. FUNÇÃO ONSUBMIT (REFATORADA)
-  // ---
   const onSubmit = async (data) => {
-    // 'data' contém { name, email, password }
     try {
-      // 1. Faz a chamada REAL para a API de registro do backend
       const response = await api.post("/auth/register", {
         name: data.name,
         email: data.email,
         password: data.password,
       });
 
-      // 2. O backend (AuthController) já criou o cookie httpOnly
-
-      // 3. O backend retornou os dados do usuário
       const userData = response.data.user;
 
-      // 4. Atualizamos o estado do frontend (AuthContext)
-      //    (Isso loga o usuário imediatamente)
       login(userData);
 
       toast.success("Conta criada com sucesso!");
-      navigate("/"); // Redireciona para a home
+      navigate("/");
     } catch (error) {
-      // 5. Pega o erro do backend (ex: "Este e-mail já está cadastrado.")
       if (error.response && error.response.data && error.response.data.error) {
         toast.error(error.response.data.error);
       } else {
@@ -76,9 +63,9 @@ export default function Register() {
           Criar uma nova conta
         </h2>
 
-        {/* 6. O formulário agora usa o onSubmit refatorado */}
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Input Nome (sem mudanças) */}
+
           <div>
             <label className="block text-[var(--clr-text-primary)] text-left">
               Nome
@@ -94,7 +81,7 @@ export default function Register() {
             )}
           </div>
 
-          {/* Input Email (sem mudanças) */}
+     
           <div>
             <label className="block text-[var(--clr-text-primary)] text-left">
               Endereço de E-mail
@@ -118,7 +105,7 @@ export default function Register() {
             )}
           </div>
 
-          {/* Input Senha (sem mudanças) */}
+
           <div>
             <label className="block text-[var(--clr-text-primary)] text-left">
               Senha
@@ -142,7 +129,6 @@ export default function Register() {
             )}
           </div>
 
-          {/* Input Confirmar Senha (sem mudanças) */}
           <div>
             <label className="block text-[var(--clr-text-primary)] text-left">
               Confirme Senha
@@ -164,7 +150,6 @@ export default function Register() {
             )}
           </div>
 
-          {/* Checkbox Termos (sem mudanças) */}
           <div className="flex items-start">
             <input
               id="terms"
@@ -195,10 +180,9 @@ export default function Register() {
             </p>
           )}
 
-          {/* 7. Botão de Submit (agora usa isSubmitting) */}
           <button
             type="submit"
-            disabled={isSubmitting} // Desabilitado durante a chamada de API
+            disabled={isSubmitting}
             className="w-full bg-[#0069A8] dark:bg-sky-600 text-white p-2 rounded-lg hover:bg-[#005080] dark:hover:bg-sky-500 transition disabled:opacity-50"
           >
             {isSubmitting ? "Criando conta..." : "Cadastrar-se"}

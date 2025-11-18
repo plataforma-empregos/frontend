@@ -12,46 +12,39 @@ export default function Header() {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const navigate = useNavigate();
 
-  // Controla a abertura e fechamento do menu mobile
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Logout no desktop
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
-  // Logout no mobile
   const handleMobileLogout = () => {
     logout();
     toggleMenu();
     navigate("/");
   };
 
-  // Função para controlar acesso a rotas protegidas (como /vacancies)
   const handleProtectedNav = (path) => {
     if (isAuthenticated) {
       navigate(path);
     } else {
-      setShowLoginPrompt(true); // exibe o modal de login
+      setShowLoginPrompt(true);
     }
   };
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        {/* Logo da plataforma */}
         <div className={styles.logo}>
           <Logo />
         </div>
 
-        {/* Menu de navegação - versão desktop */}
         <nav className={styles.navDesktop}>
           <ul className={styles.navList}>
             <li>
-              {/* Botão de "Buscar Vagas" protegido */}
               <button
                 onClick={() => handleProtectedNav("/vacancies")}
                 className={styles.navButton}
@@ -61,7 +54,12 @@ export default function Header() {
             </li>
 
             <li>
-              <Link to="/companies">Buscar Empresas</Link>
+              <button
+                onClick={() => handleProtectedNav("/companies")}
+                className={styles.navButton}
+              >
+                Buscar Empresas
+              </button>
             </li>
 
             {isAuthenticated ? (
@@ -91,26 +89,22 @@ export default function Header() {
               </>
             )}
 
-            {/* Botão de alternância de tema */}
             <li>
               <ThemeToggleButton />
             </li>
           </ul>
         </nav>
 
-        {/* Botão hamburguer (mobile) */}
         <div className="flex items-center gap-4 md:hidden">
           <button className={styles.hamburgerButton} onClick={toggleMenu}>
             ☰
           </button>
         </div>
 
-        {/* Menu lateral (mobile) */}
         {isMenuOpen && (
           <nav className={styles.navMobile}>
             <ul className={styles.navLinksMobile}>
               <li>
-                {/* "Buscar Vagas" no menu mobile também protegido */}
                 <button
                   onClick={() => {
                     handleProtectedNav("/vacancies");
@@ -128,7 +122,6 @@ export default function Header() {
                 </Link>
               </li>
 
-              {/* Opções mobile de autenticação */}
               {isAuthenticated ? (
                 <>
                   <li>
@@ -164,7 +157,6 @@ export default function Header() {
                 </>
               )}
 
-              {/* Alternância de tema no menu mobile */}
               <li className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex justify-between items-center">
                   <span>Alternar Tema:</span>
@@ -176,10 +168,9 @@ export default function Header() {
         )}
       </div>
 
-      {/* Modal exibido quando usuário tenta acessar área protegida */}
       <LoginPromptModal
         isOpen={showLoginPrompt}
-        onRequestClose={() => setShowLoginPrompt(false)} // ✅ Corrigido para o mesmo padrão da SearchBar
+        onRequestClose={() => setShowLoginPrompt(false)}
       />
     </header>
   );
