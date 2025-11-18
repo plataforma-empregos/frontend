@@ -2,6 +2,42 @@
   max-width: 1000px;
   margin: 2rem auto;
   padding: 0 1rem;
+  min-height: 60vh;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  padding-bottom: 2rem;
+}
+
+.pagination span {
+  color: var(--clr-text-secondary);
+  font-weight: 500;
+}
+
+.pagination button {
+  background-color: var(--clr-accent-primary);
+  color: var(--clr-text-inverse);
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pagination button:hover {
+  background-color: var(--clr-accent-tertiary);
+}
+
+.pagination button:disabled {
+  background-color: var(--clr-text-muted);
+  cursor: not-allowed;
 }
 
 .pageTitle {
@@ -73,6 +109,14 @@ html[data-theme="dark"] .companyList {
   font-size: 0.9rem;
   color: var(--clr-text-secondary);
   margin-bottom: 0.1rem;
+}
+
+.loadingMessage {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--clr-text-secondary);
+  font-weight: normal;
+  font-size: 1rem;
 }
 
 /*Media Queries*/
