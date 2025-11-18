@@ -1,3 +1,5 @@
+
+
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -61,7 +63,9 @@ export default function Register() {
           Criar uma nova conta
         </h2>
 
+
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+
           <div>
             <label className="block text-[var(--clr-text-primary)] text-left">
               Nome
@@ -77,6 +81,7 @@ export default function Register() {
             )}
           </div>
 
+     
           <div>
             <label className="block text-[var(--clr-text-primary)] text-left">
               Endereço de E-mail
@@ -99,6 +104,7 @@ export default function Register() {
               </p>
             )}
           </div>
+
 
           <div>
             <label className="block text-[var(--clr-text-primary)] text-left">
