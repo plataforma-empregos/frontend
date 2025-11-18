@@ -29,6 +29,23 @@ html[data-theme="dark"] .jobItem {
   flex-shrink: 0;
 }
 
+.companyLogoPlaceholder {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--clr-bg-secondary, #f3f4f6);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.placeholderIcon {
+  color: var(--clr-text-secondary, #6b7280);
+  width: 24px;
+  height: 24px;
+}
+
 .jobInfo {
   flex-grow: 1;
 }

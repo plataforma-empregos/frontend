@@ -116,6 +116,22 @@
   color: var(--clr-footer-link-hover);
 }
 
+/* --- NOVO: STATUS DE VALIDAÇÃO DO NEWSLETTER --- */
+
+.errorMessage {
+  color: #ff4d4d;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.successMessage {
+  color: #4caf50;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
   .footerContent {

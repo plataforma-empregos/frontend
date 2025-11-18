@@ -1,16 +1,26 @@
 import styles from "../styles/JobListingItem.module.css";
 import { Link, useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { FaBriefcase } from "react-icons/fa";
 
 export default function JobListingItem({ job }) {
   const [searchParams] = useSearchParams();
+  const [imgError, setImgError] = useState(false);
 
   return (
     <div className={styles.jobItem}>
-      <img
-        src={job.imageUrl || "https://via.placeholder.com/60"}
-        alt={`${job.company} logo`}
-        className={styles.companyLogo}
-      />
+      {job.imageUrl && !imgError ? (
+        <img
+          src={job.imageUrl}
+          alt={`${job.company} logo`}
+          className={styles.companyLogo}
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        <div className={styles.companyLogoPlaceholder} aria-hidden="true">
+          <FaBriefcase className={styles.placeholderIcon} />
+        </div>
+      )}
       <div className={styles.jobInfo}>
         <h3 className={styles.jobTitle}>{job.title}</h3>
         <p className={styles.companyName}>{job.company}</p>
