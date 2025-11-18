@@ -14,24 +14,47 @@ export default function Footer() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // NOVO → mensagem de sucesso/erro
+  const [status, setStatus] = useState({ type: "", message: "" });
+
+  // regex bem simples (não “trava” e funciona para 99% dos casos)
+  const validateEmail = (value) => /\S+@\S+\.\S+/.test(value);
+
   const handleSubscribe = async () => {
-    if (!email) {
-      alert("Por favor, insira um endereço de e-mail válido.");
+    // limpa as mensagens anteriores
+    setStatus({ type: "", message: "" });
+
+    if (!email.trim() || !validateEmail(email)) {
+      setStatus({
+        type: "error",
+        message: "Por favor, insira um e-mail válido.",
+      });
       return;
     }
 
     try {
       setLoading(true);
-      await subscribeNewsletter(email);
-      alert("Inscrição realizada com sucesso! 🎉");
+
+      await subscribeNewsletter(email); // chamada da API
+
+      setStatus({
+        type: "success",
+        message: "Inscrição realizada com sucesso! 🎉",
+      });
+
       setEmail("");
+
     } catch (error) {
-      alert("Erro ao realizar inscrição. Tente novamente mais tarde.");
+      setStatus({
+        type: "error",
+        message: error?.response?.data?.message || "Erro ao realizar inscrição. Tente novamente.",
+      });
+
     } finally {
       setLoading(false);
     }
   };
-  
+
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
@@ -89,17 +112,33 @@ export default function Footer() {
               As últimas notícias sobre empregos, artigos enviados para sua
               caixa de entrada semanalmente.
             </p>
+
             <div className={styles.subscribeForm}>
               <input
                 type="email"
                 placeholder="Endereço de Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={loading}
               />
+
               <button onClick={handleSubscribe} disabled={loading}>
                 {loading ? "Enviando..." : "Inscrever-se"}
               </button>
             </div>
+
+            {/* MENSAGENS DE STATUS */}
+            {status.message && (
+              <p
+                className={
+                  status.type === "error"
+                    ? styles.errorMessage
+                    : styles.successMessage
+                }
+              >
+                {status.message}
+              </p>
+            )}
           </div>
         </div>
 
