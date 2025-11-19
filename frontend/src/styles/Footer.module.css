@@ -116,8 +116,6 @@
   color: var(--clr-footer-link-hover);
 }
 
-/* --- NOVO: STATUS DE VALIDAÇÃO DO NEWSLETTER --- */
-
 .errorMessage {
   color: #ff4d4d;
   margin-top: 8px;
@@ -132,44 +130,68 @@
   font-weight: 500;
 }
 
-/* Media Queries */
 @media (max-width: 768px) {
+  .footer {
+    padding: 40px 0 20px 0;
+  }
+
   .footerContent {
+    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 40px;
+    gap: 32px;
+    margin-bottom: 32px;
   }
-  .logoColumn {
-    align-items: center;
-    text-align: center;
-  }
-  .linksWrapper {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2.5rem;
-    width: 100%;
-    text-align: center;
-  }
+
+  .logoColumn,
+  .footerColumn,
   .newsletterColumn {
-    text-align: center;
+    width: 100%;
+    max-width: 380px;
   }
-  .subscribeForm {
+
+  .logoColumn {
+    display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 12px;
   }
+
+  .linksWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .footerColumn {
+    gap: 8px;
+  }
+
+  .newsletterColumn {
+    margin-top: 8px;
+  }
+
+  .subscribeForm {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 350px;
+    margin: 0 auto;
+  }
+
   .subscribeForm input,
   .subscribeForm button {
     width: 100%;
-    max-width: 350px;
     border-radius: 6px;
   }
-  .subscribeForm input {
-    margin-bottom: 10px;
-    text-align: center;
-  }
+
   .footerBottom {
     flex-direction: column;
-    gap: 20px;
+    text-align: center;
+    gap: 16px;
+    margin-top: 32px;
   }
 }

@@ -3,6 +3,7 @@ import { useSearchParams, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import JobListingItem from "../components/JobListingItem";
 import SearchBar from "../components/SearchBar";
+import JobSkeleton from "../components/JobSkeleton";
 import styles from "../styles/VacanciesPage.module.css";
 import api from "../services/api";
 import toast from "react-hot-toast";
@@ -107,7 +108,11 @@ export default function VacanciesPage() {
 
       <div className={styles.jobListContainer}>
         {isLoading ? (
-          <p className={styles.loadingMessage}>Buscando vagas...</p>
+          <>
+            {[...Array(5)].map((_, index) => (
+              <JobSkeleton key={index} />
+            ))}
+          </>
         ) : jobsToShow.length > 0 ? (
           jobsToShow.map((job) => <JobListingItem key={job.id} job={job} />)
         ) : (
