@@ -1,6 +1,7 @@
 import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import JobDetailsSkeleton from "../components/JobDetailsSkeleton";
 
 const ReadMore = ({ children }) => {
   const text = children;
@@ -72,8 +73,9 @@ export default function JobDetailsPage() {
     fetchDetails();
   }, [jobId]);
 
-  if (loading)
-    return <p className="text-center p-10">Carregando detalhes da vaga...</p>;
+  if (loading) {
+    return <JobDetailsSkeleton />;
+  }
 
   if (error)
     return (

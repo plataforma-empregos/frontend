@@ -1,10 +1,9 @@
-
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "../styles/CompaniesPage.module.css";
 import api from "../services/api";
 import SearchBar from "../components/SearchBar";
+import CompanySkeleton from "../components/CompanySkeleton";
 
 const generateSlug = (name) => {
   if (!name) return "";
@@ -20,6 +19,7 @@ export default function CompaniesPage() {
   const [allCompanies, setAllCompanies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const [keyword, setKeyword] = useState("GEICO");
   const [location, setLocation] = useState("");
@@ -30,6 +30,7 @@ export default function CompaniesPage() {
 
   const fetchCompanies = async () => {
     setIsLoading(true);
+    setErrorMessage(null);
 
     try {
       const cacheKey = `companies_${keyword}_${location}`;
@@ -69,11 +70,18 @@ export default function CompaniesPage() {
       sessionStorage.setItem(cacheKey, JSON.stringify(uniqueCompanies));
     } catch (error) {
       console.error("Erro ao buscar empresas:", error);
+      if (error.response && error.response.status === 429) {
+        setErrorMessage("Limite de buscas excedido. Tente mais tarde.");
+      } else {
+        setErrorMessage("Erro ao carregar empresas.");
+      }
+      setAllCompanies([]);
     } finally {
       setIsLoading(false);
     }
-  }; // Paginação
+  };
 
+  // Paginação
   const totalPages = Math.ceil(allCompanies.length / COMPANIES_PER_PAGE);
   const startIndex = (currentPage - 1) * COMPANIES_PER_PAGE;
   const currentCompanies = allCompanies.slice(
@@ -94,12 +102,7 @@ export default function CompaniesPage() {
   };
 
   return (
-    <div
-      className={`
-        ${styles.pageContainer} 
-        ${isLoading ? styles.loadingErrorContainer : ""}
-      `}
-    >
+    <div className={styles.pageContainer}>
       <h1 className={styles.pageTitle}>Empresas Parceiras</h1>
 
       <SearchBar
@@ -108,35 +111,45 @@ export default function CompaniesPage() {
         onSearch={handleSearch}
       />
 
-      {isLoading ? (
-        <p className={styles.loadingMessage}>Buscando Empresas...</p>
+      {errorMessage ? (
+        <div className={styles.loadingErrorContainer}>
+          <p className={styles.loadingMessage}>{errorMessage}</p>
+        </div>
       ) : (
         <>
-          <p className={styles.pageSubtitle}>
-            Total de empresas encontradas: {allCompanies.length}
-          </p>
+          {!isLoading && (
+            <p className={styles.pageSubtitle}>
+              Total de empresas encontradas: {allCompanies.length}
+            </p>
+          )}
 
           <div className={styles.companyList}>
-            {currentCompanies.map((company) => (
-              <Link
-                to={`/companies/${company.slug}`}
-                key={company.slug}
-                className={styles.companyCard}
-              >
-                <img
-                  src={company.imageUrl}
-                  alt={`${company.name} logo`}
-                  className={styles.companyLogo}
-                />
-                <div className={styles.companyInfo}>
-                  <h2 className={styles.companyName}>{company.name}</h2>
-                  <p className={styles.companyLocation}>{company.location}</p>
-                </div>
-              </Link>
-            ))}
+            {isLoading
+              ? [...Array(COMPANIES_PER_PAGE)].map((_, index) => (
+                  <CompanySkeleton key={index} />
+                ))
+              : currentCompanies.map((company) => (
+                  <Link
+                    to={`/companies/${company.slug}`}
+                    key={company.slug}
+                    className={styles.companyCard}
+                  >
+                    <img
+                      src={company.imageUrl}
+                      alt={`${company.name} logo`}
+                      className={styles.companyLogo}
+                    />
+                    <div className={styles.companyInfo}>
+                      <h2 className={styles.companyName}>{company.name}</h2>
+                      <p className={styles.companyLocation}>
+                        {company.location}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
           </div>
 
-          {totalPages > 1 && (
+          {!isLoading && totalPages > 1 && (
             <div className={styles.pagination}>
               <button
                 onClick={() => goToPage(currentPage - 1)}

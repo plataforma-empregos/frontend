@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import JobListingItem from "../components/JobListingItem";
 import styles from "../styles/CompaniesDetailsPage.module.css";
+import CompanyDetailsSkeleton from "../components/CompanyDetailsSkeleton";
 import api from "../services/api";
 
 const generateSlug = (name) => {
@@ -74,13 +75,8 @@ const CompanyDetailsPage = () => {
   }, [slug, companyNameFromSlug]);
 
   if (isLoading) {
-    return (
-      <div className={styles.LoadingErrorContainer}>
-        <p className={styles.loadingMessage}>Carregando...</p>
-      </div>
-    );
+    return <CompanyDetailsSkeleton />;
   }
-
   if (error || !companyDetails) {
     return (
       <div className={styles.LoadingErrorContainer}>
@@ -101,20 +97,24 @@ const CompanyDetailsPage = () => {
         &larr; Voltar para a lista de empresas
       </Link>
 
-      <header className={styles.companyHeader}>
-        <img
-          src={companyDetails.imageUrl}
-          alt={`${companyDetails.name} logo`}
-          className={styles.companyLogo}
-        />
+      <div className={styles.companyCard}>
+        <header className={styles.companyHeader}>
+          <img
+            src={companyDetails.imageUrl}
+            alt={`${companyDetails.name} logo`}
+            className={styles.companyLogo}
+          />
 
-        <div className={styles.companyInfo}>
-          <h1 className={styles.companyName}>{companyDetails.name}</h1>
-          <p className={styles.companyLocation}>{companyDetails.location}</p>
-        </div>
-      </header>
+          <div className={styles.companyInfo}>
+            <h1 className={styles.companyName}>{companyDetails.name}</h1>
+            <p className={styles.companyLocation}>{companyDetails.location}</p>
+          </div>
+        </header>
 
-      <p className={styles.companyDescription}>{companyDetails.description}</p>
+        <p className={styles.companyDescription}>
+          {companyDetails.description}
+        </p>
+      </div>
 
       <section className={styles.jobsSection}>
         <h2 className={styles.jobsTitle}>
