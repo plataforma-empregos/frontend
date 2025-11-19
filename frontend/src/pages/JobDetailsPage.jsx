@@ -1,6 +1,8 @@
 import { useParams, Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import { FaBriefcase } from "react-icons/fa";
+
 
 const ReadMore = ({ children }) => {
   const text = children;
@@ -55,7 +57,8 @@ export default function JobDetailsPage() {
         setJob({
           title: jobData.job_title,
           company: jobData.employer_name,
-          imageUrl: jobData.employer_logo || "https://via.placeholder.com/60",
+          // imageUrl: jobData.employer_logo || "https://via.placeholder.com/60",
+          imageUrl: jobData.employer_logo || null,
           cityState: jobData.job_city || jobData.job_country || "Remoto",
           type: jobData.job_employment_type || "Não informado",
           description: jobData.job_description,
@@ -102,11 +105,7 @@ export default function JobDetailsPage() {
 
       <div className="bg-[var(--clr-bg-primary)] p-8 rounded-lg shadow-md">
         <div className="flex items-center mb-4">
-          <img
-            src={job.imageUrl}
-            alt={`${job.company} logo`}
-            className="w-16 h-16 mr-4 rounded"
-          />
+          <JobLogo imageUrl={job.imageUrl} company={job.company} />
           <div>
             <h1 className="text-2xl font-bold text-[var(--clr-text-primary)]">
               {job.title}
@@ -137,6 +136,27 @@ export default function JobDetailsPage() {
           </a>
         )}
       </div>
+    </div>
+  );
+}
+
+function JobLogo({ imageUrl, company }) {
+  const [imgError, setImgError] = useState(false);
+
+  if (imageUrl && !imgError) {
+    return (
+      <img
+        src={imageUrl}
+        alt={`${company} logo`}
+        className="w-16 h-16 mr-4 rounded object-contain bg-transparent"
+        onError={() => setImgError(true)}
+      />
+    );
+  }
+
+  return (
+    <div className="w-16 h-16 mr-4 rounded bg-[var(--clr-bg-secondary,#f3f4f6)] flex items-center justify-center">
+      <FaBriefcase className="text-[var(--clr-text-secondary,#6b7280)] w-6 h-6" />
     </div>
   );
 }
